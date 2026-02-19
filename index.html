@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 日本家庭旅遊戰術儀表板 (v173 雙軌連動版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto+Mono:wght@500&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f1f5f9;
+            color: #334155;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --jr-color: #15803d;
+            --metro-color: #1d4ed8;
+            --toei-color: #be185d;
+            --private-color: #4b5563;
+            --bus-color: #c2410c;
+            --plan-a-color: #ea580c;
+            --plan-b-color: #0284c7;
+        }
+
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .main-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 8px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #fff;
+            overflow-x: auto;
+        }
+
+        .main-tab-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #64748b;
+            background: transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .main-tab-btn:hover {
+            background: #f8fafc;
+            color: #334155;
+        }
+
+        .main-tab-btn.active {
+            background: #0f172a;
+            color: white;
+            box-shadow: 0 2px 4px rgba(15, 23, 42, 0.2);
+        }
+
+        .day-tabs-container {
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 8px 16px;
+            overflow-x: auto;
+            display: flex;
+            gap: 6px;
+            scrollbar-width: none;
+        }
+
+        .day-btn {
+            padding: 6px 12px;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #475569;
+            background: white;
+            border: 1px solid #cbd5e1;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .day-btn:hover {
+            border-color: #94a3b8;
+        }
+
+        .day-btn.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+
+        .day-content {
+            max-width: 900px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .day-content.active {
+            display: block;
+        }
+
+        .day-header {
+            background: #1e293b;
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .t-row {
+            display: flex;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .t-row:last-child {
+            border-bottom: none;
+        }
+
+        .t-time {
+            width: 110px;
+            flex-shrink: 0;
+            padding: 16px 10px;
+            text-align: right;
+            border-right: 2px solid #e2e8f0;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #475569;
+            position: relative;
+            background: #f8fafc;
+        }
+
+        .t-content {
+            flex-grow: 1;
+            padding: 16px 20px;
+        }
+
+        .t-row.move {
+            background-color: #ffffff;
+        }
+
+        .t-row.activity {
+            background-color: #fffbeb;
+        }
+
+        .t-row.meal {
+            background-color: #f0fdf4;
+        }
+
+        .t-row.hotel {
+            background-color: #eef2ff;
+        }
+
+        .t-row.alert {
+            background-color: #fef2f2;
+        }
+
+        .t-row.safe {
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+        }
+
+        .t-time::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 24px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            border: 2px solid white;
+        }
+
+        .t-row.activity .t-time::after {
+            background: #d97706;
+        }
+
+        .t-row.meal .t-time::after {
+            background: #16a34a;
+        }
+
+        .t-row.hotel .t-time::after {
+            background: #4f46e5;
+        }
+
+        .t-row.alert .t-time::after {
+            background: #ef4444;
+        }
+
+        .t-row.safe .t-time::after {
+            background: #16a34a;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-right: 6px;
+            margin-bottom: 4px;
+            border: 1px solid;
+        }
+
+        .tag-jr {
+            background: #dcfce7;
+            color: var(--jr-color);
+            border-color: #86efac;
+        }
+
+        .tag-metro {
+            background: #dbeafe;
+            color: var(--metro-color);
+            border-color: #93c5fd;
+        }
+
+        .tag-toei {
+            background: #fce7f3;
+            color: var(--toei-color);
+            border-color: #fbcfe8;
+        }
+
+        .tag-private {
+            background: #f3f4f6;
+            color: var(--private-color);
+            border-color: #d1d5db;
+        }
+
+        .tag-bus {
+            background: #ffedd5;
+            color: var(--bus-color);
+            border-color: #fdba74;
+        }
+
+        .tag-walk {
+            background: #f8fafc;
+            color: #64748b;
+            border-color: #cbd5e1;
+            border-style: dashed;
+        }
+
+        .tag-shop {
+            background: #fff1f2;
+            color: #be123c;
+            border-color: #fda4af;
+        }
+
+        .tag-alert {
+            background: #fee2e2;
+            color: #b91c1c;
+            border-color: #fca5a5;
+        }
+
+        .tag-warn {
+            background: #fef9c3;
+            color: #854d0e;
+            border-color: #facc15;
+        }
+
+        .tag-pass {
+            background: #e0e7ff;
+            color: #3730a3;
+            border-color: #6366f1;
+        }
+
+        .tag-safe {
+            background: #dcfce7;
+            color: #15803d;
+            border-color: #22c55e;
+        }
+
+        .tag-leg {
+            background: #fee2e2;
+            color: #b91c1c;
+            border-color: #fca5a5;
+            font-weight: 800;
+        }
+
+        .tag-reserve {
+            background: #4f46e5;
+            color: white;
+            border-color: #4338ca;
+            font-weight: bold;
+        }
+
+        .tag-taxi {
+            background: #fef08a;
+            color: #854d0e;
+            border-color: #eab308;
+            font-weight: 800;
+        }
+
+        .tag-crowd {
+            background: #991b1b;
+            color: white;
+            border-color: #7f1d1d;
+            font-weight: 800;
+        }
+
+        .tag-early {
+            background: #ccfbf1;
+            color: #0f766e;
+            border-color: #14b8a6;
+            font-weight: 800;
+        }
+
+        .info-pill {
+            font-size: 0.7rem;
+            padding: 1px 6px;
+            border-radius: 99px;
+            background: #f1f5f9;
+            color: #64748b;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        .spot-info-box {
+            margin-top: 10px;
+            background: #faf5ff;
+            border: 1px solid #e9d5ff;
+            border-left: 4px solid #9333ea;
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .spot-info-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #7e22ce;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+        }
+
+        .spot-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.8rem;
+            color: #581c87;
+        }
+
+        .spot-list li {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .spot-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #c084fc;
+        }
+
+        .photo-badge {
+            background: #9333ea;
+            color: white;
+            font-size: 0.65rem;
+            padding: 1px 4px;
+            border-radius: 4px;
+            margin-right: 4px;
+            font-weight: bold;
+        }
+
+        .warn-badge {
+            background: #ef4444;
+            color: white;
+            font-size: 0.65rem;
+            padding: 1px 4px;
+            border-radius: 4px;
+            margin-right: 4px;
+            font-weight: bold;
+        }
+
+        .budget-badge {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #16a34a;
+            margin-left: 6px;
+            font-weight: bold;
+        }
+
+        .toggle-box {
+            padding: 12px 20px;
+            background: #f1f5f9;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 10px 8px;
+            text-align: center;
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-btn.plan-a {
+            border-left: 4px solid var(--plan-a-color);
+        }
+
+        .toggle-btn.plan-a.active {
+            background: #fff7ed;
+            color: #c2410c;
+            border-color: #fdba74;
+            border-left-color: var(--plan-a-color);
+            box-shadow: 0 1px 3px rgba(234, 88, 12, 0.1);
+        }
+
+        .toggle-btn.plan-b {
+            border-left: 4px solid var(--plan-b-color);
+        }
+
+        .toggle-btn.plan-b.active {
+            background: #f0f9ff;
+            color: #0369a1;
+            border-color: #bae6fd;
+            border-left-color: var(--plan-b-color);
+            box-shadow: 0 1px 3px rgba(2, 132, 199, 0.1);
+        }
+
+        .toggle-btn.locked {
+            cursor: default;
+            opacity: 0.5;
+            background: #f1f5f9;
+            border: 1px dashed #cbd5e1;
+        }
+
+        .toggle-btn.locked.active {
+            opacity: 1;
+            background: white;
+            border-style: solid;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .hidden-plan {
+            display: none;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .checklist-item:hover {
+            background-color: #f8fafc;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-top: 4px;
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #2563eb;
+        }
+
+        .checklist-item.checked {
+            background-color: #f0fdf4;
+        }
+
+        .checklist-item.checked .item-content {
+            text-decoration: line-through;
+            color: #94a3b8;
+        }
+
+        .checklist-item.checked .count-badge {
+            background-color: #e2e8f0;
+            color: #94a3b8;
+            border-color: #cbd5e1;
+            text-decoration: none;
+        }
+
+        h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        p {
+            font-size: 0.85rem;
+            color: #475569;
+            line-height: 1.5;
+            margin-bottom: 4px;
+        }
+
+        .sub-text {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .step-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 8px;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        .step-content {
+            font-size: 0.8rem;
+            color: #475569;
+        }
+
+        .weather-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .weather-table th {
+            text-align: left;
+            padding: 10px;
+            background: #f1f5f9;
+            color: #64748b;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 0.8rem;
+        }
+
+        .weather-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+            vertical-align: middle;
+        }
+
+        .weather-icon {
+            font-size: 1.5rem;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .temp-high {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .temp-low {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .weather-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 12px;
+        }
+
+        .sun-time {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.75rem;
+            background: #fef3c7;
+            color: #b45309;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .count-badge {
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            margin-left: auto;
+            border: 1px solid #bfdbfe;
+            white-space: nowrap;
+        }
+
+        .ext-link-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+
+        .ext-link-btn.tenki {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+
+        .ext-link-btn.yahoo {
+            background: #fefce8;
+            color: #a16207;
+            border: 1px solid #fef08a;
+        }
+
+        .ext-link-btn.scw {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        .ext-link-btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="sticky-header">
+        <div class="px-4 py-3 bg-white border-b border-gray-100 flex justify-between items-center">
+            <h1 class="text-lg font-bold text-slate-900">🇯🇵 2026 日本家庭旅遊戰術儀表板 (v173 雙軌連動版)</h1>
+        </div>
+        <!-- Level 1 Tabs -->
+        <nav class="main-tabs">
+            <button onclick="switchMainTab('daily')" id="tab-daily" class="main-tab-btn active">📅 每日行程 (Full)</button>
+            <button onclick="switchMainTab('weather')" id="tab-weather" class="main-tab-btn text-sky-600">🌤️
+                氣象戰情</button>
+            <button onclick="switchMainTab('hotels')" id="tab-hotels" class="main-tab-btn">🏨 住宿</button>
+            <button onclick="switchMainTab('logistics')" id="tab-logistics" class="main-tab-btn text-indigo-700">🚅
+                劃位</button>
+            <button onclick="switchMainTab('booking')" id="tab-booking" class="main-tab-btn text-red-600">✅ 待辦</button>
+            <button onclick="switchMainTab('packing')" id="tab-packing" class="main-tab-btn text-amber-600">🧳
+                行李</button>
+        </nav>
+        <!-- Level 2 Tabs: Days (Only for Daily Tab) -->
+        <nav id="day-tabs-nav" class="day-tabs-container">
+            <button onclick="switchDay('day1')" id="btn-day1" class="day-btn active">D1 澀谷/六本木</button>
+            <button onclick="switchDay('day2')" id="btn-day2" class="day-btn">D2 淺草/銀座</button>
+            <button onclick="switchDay('day3')" id="btn-day3" class="day-btn text-amber-600">D3 河口湖(決策)</button>
+            <button onclick="switchDay('day4')" id="btn-day4" class="day-btn text-amber-600">D4 移動日(續)</button>
+            <button onclick="switchDay('day5')" id="btn-day5" class="day-btn text-amber-600">D5 伊根/閃電(決策)</button>
+            <button onclick="switchDay('day6')" id="btn-day6" class="day-btn text-amber-600">D6 嵐山/岡山(續)</button>
+            <button onclick="switchDay('day7')" id="btn-day7" class="day-btn">D7 宇治奈良</button>
+            <button onclick="switchDay('day8')" id="btn-day8" class="day-btn">D8 大阪</button>
+            <button onclick="switchDay('day9')" id="btn-day9" class="day-btn">D9 返家</button>
+        </nav>
+    </header>
+
+    <div class="p-4">
+
+        <!-- ==================== SECTION: DAILY PLAN ==================== -->
+        <div id="section-daily">
+            <!-- DAY 1 -->
+            <div id="day1" class="day-content">
+                <div class="day-header">
+                    <h3>Day 1 (2/21 六): 澀谷天空 & 麻布台 & 六本木點燈</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿:
+                        Home'n Lounge</span>
+                </div>
+                <div class="t-row safe" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
+                    <div class="t-time" style="color:#15803d;">安全<br>確認</div>
+                    <div class="t-content"><span class="tag tag-safe">天氣：晴朗 (15°C)</span>
+                        <p><strong>完美開局：</strong> Shibuya Sky 天氣極佳。已加入 ABC-MART 購物行程。</p>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">06:35</div>
+                    <div class="t-content">
+                        <h4>抵達成田機場 (NRT) 第2航廈</h4>
+                        <p>入境手續、領取行李。</p>
+                    </div>
+                </div>
+                <div class="t-row alert" style="background-color:#fee2e2;">
+                    <div class="t-time" style="color:#b91c1c;">07:30<br>|<br>08:10</div>
+                    <div class="t-content"><span class="tag tag-reserve">⚠️ 機場換票</span>
+                        <h4 style="color:#b91c1c;">雙重任務 (Skyliner + JR 富士回遊)</h4>
+                        <p>1. 藍色櫃台換 Skyliner。<br>2. 綠色櫃台換 JR 富士回遊 (已預約，僅領實體票)。<br><span class="sub-text">※
+                                預留充足時間，不趕車。</span></p>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">08:12<br>|<br>09:00</div>
+                    <div class="t-content"><span class="tag tag-private">Skyliner</span>
+                        <h4>成田機場 -> 京成上野 (終點)</h4>
+                        <p>目標 08:12 班次，若趕不上搭 08:30 也完全來得及。</p>
+                    </div>
+                </div>
+                <div class="t-row move" style="background-color: #fdf2f8; border-left: 4px solid #be185d;">
+                    <div class="t-time" style="color:#be185d;">09:10<br>|<br>09:25</div>
+                    <div class="t-content"><span class="tag tag-toei"
+                            style="background:#be185d; color:white;">大江戶線</span>
+                        <h4>上野御徒町 -> 東新宿 (直達)</h4>
+                        <p><strong>關鍵動線：</strong> 走地下連通道去搭大江戶線 (E09 -> E02)。</p>
+                    </div>
+                </div>
+                <div class="t-row hotel" style="background-color: #ecfdf5;">
+                    <div class="t-time">09:30<br>|<br>10:00</div>
+                    <div class="t-content"><span class="tag tag-safe">任務完成</span>
+                        <h4 style="color:#047857;">Home'n Lounge 行李託付</h4>
+                        <p>將所有大行李交給櫃台，一身輕！</p>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">10:00<br>|<br>10:15</div>
+                    <div class="t-content"><span class="tag tag-metro"
+                            style="background:#b91c1c; color:white;">副都心線</span>
+                        <h4>東新宿 -> 澀谷 (直達)</h4>
+                        <p><strong>神動線：</strong> 東新宿 (F12) 搭副都心線急行，直接到澀谷 (F16)。</p>
+                    </div>
+                </div>
+                <div class="t-row activity">
+                    <div class="t-time">10:20<br>|<br>10:50</div>
+                    <div class="t-content">
+                        <h4>澀谷十字路口 & 八公像</h4>
+                        <p>先拍照，等待商店 11:00 開門。</p>
+                    </div>
+                </div>
+                <div class="t-row activity" style="background-color: #fffbeb; border-left: 4px solid #f59e0b;">
+                    <div class="t-time" style="color:#b45309;">11:00<br>|<br>11:35</div>
+                    <div class="t-content"><span class="tag tag-shop">購物特攻</span>
+                        <h4 style="color:#b45309;">ABC-MART GRAND STAGE 澀谷</h4>
+                        <p><strong>⚠️ 時間緊迫：</strong> 11:00 準時進店，直接秀圖找鞋。<br><strong>位置：</strong> 距離澀谷站 A2 出口約 3 分鐘。務必在
+                            11:35 前結帳離開。</p>
+                    </div>
+                </div>
+                <div class="t-row activity" style="background-color: #eff6ff; border-left: 4px solid #2563eb;">
+                    <div class="t-time" style="color:#1d4ed8;">11:40<br>|<br>13:10</div>
+                    <div class="t-content"><span class="tag tag-safe"
+                            style="background:#16a34a; border-color: #15803d;">已預約</span>
+                        <h4 style="color:#1d4ed8;">Shibuya Sky (11:40 入場)</h4>
+                        <p><strong>無縫接軌：</strong> 買完鞋剛好上樓。正午頂光，拍人像記得找好角度。</p>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 拍攝指南</div>
+                            <ul class="spot-list">
+                                <li><strong>Sky Edge：</strong> 先衝這個角落，背景最乾淨。</li>
+                                <li><strong>手扶梯：</strong> 戶外段必拍。</li>
+                                <li><strong>停機坪：</strong> 360度全景，注意強風，抓緊帽子。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row meal">
+                    <div class="t-time">13:10<br>|<br>14:30</div>
+                    <div class="t-content">
+                        <h4>午餐：澀谷 Scramble Square / Parco</h4>
+                        <p>避開 12:00 尖峰，找餐廳更容易。不建議排炸牛元村 (澀谷店)。</p>
+                    </div>
+                </div>
+                <div class="t-row activity">
+                    <div class="t-time">14:30<br>|<br>15:15</div>
+                    <div class="t-content">
+                        <h4>涉谷 Parco (任天堂) / 宮下公園</h4><span class="tag tag-shop">逛街</span>
+                        <p>簡單逛逛，不用太久。</p>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">15:15<br>|<br>15:50</div>
+                    <div class="t-content"><span class="tag tag-pass">地鐵券 Free</span>
+                        <h4>移動：澀谷 -> 麻布台 (神谷町)</h4>
+                        <p>澀谷站容易迷路，提早 15 分鐘出發去搭車。建議搭銀座線到虎之門，或轉日比谷線到神谷町。</p>
+                    </div>
+                </div>
+                <div class="t-row activity">
+                    <div class="t-time">16:00<br>|<br>17:50</div>
+                    <div class="t-content"><span class="tag tag-safe"
+                            style="background:#16a34a; border-color: #15803d;">已預約</span>
+                        <h4>麻布台之丘 & TeamLab Borderless</h4><span class="info-pill">16:00 場次</span>
+                        <p>控制參觀時間在 1 小時 50 分鐘左右。</p>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 TeamLab 攝影</div>
+                            <ul class="spot-list">
+                                <li><strong>Bubble Universe：</strong> 必拍，鏡面反射。</li>
+                                <li><strong>En Tea House：</strong> 茶中花朵，低光源請穩住手機。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">17:50<br>|<br>18:00</div>
+                    <div class="t-content"><span class="tag tag-taxi">計程車</span>
+                        <h4>移動：麻布台 -> 六本木之丘</h4>
+                        <p>帶著長輩，直接搭計程車過去最快 (約 1000円)。</p>
+                    </div>
+                </div>
+                <div class="t-row meal" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
+                    <div class="t-time" style="color:#15803d;">18:00<br>|<br>19:20</div>
+                    <div class="t-content"><span class="tag tag-safe">晚餐優先</span>
+                        <h4 style="color:#15803d;">晚餐：六本木之丘 (Roppongi Hills)</h4>
+                        <p><strong>戰術調整：</strong> 為了長輩體力，**先吃飯**再看夜景。<br>推薦：Shake Shack (漢堡), AFURI (拉麵), 豚組食堂 (炸豬排)。
+                        </p>
+                    </div>
+                </div>
+                <div class="t-row activity" style="background-color: #312e81; color: white;">
+                    <div class="t-time" style="color: #a5b4fc; border-right-color: #4338ca;">19:30<br>|<br>20:30</div>
+                    <div class="t-content"><span class="tag tag-safe"
+                            style="background:#16a34a; border-color: #15803d;">已購票</span>
+                        <h4 style="color: white;">Tokyo City View (觀景台)</h4>
+                        <p>吃飽後上樓看夜景。</p>
+                        <div class="spot-info-box"
+                            style="background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);">
+                            <div class="spot-info-title" style="color:white;">📸 夜景攝影</div>
+                            <ul class="spot-list" style="color:white;">
+                                <li><strong>東京鐵塔：</strong> 尋找面對「東京鐵塔」的落地窗位置。</li>
+                                <li><strong>反光消除：</strong> 盡量貼近玻璃拍，或用外套遮光。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row activity" style="background-color: #fffbeb; border-left: 4px solid #f59e0b;">
+                    <div class="t-time" style="color:#b45309;">20:30<br>|<br>21:00</div>
+                    <div class="t-content"><span class="tag tag-shop">隨興安排</span>
+                        <h4 style="color:#b45309;">櫸坂通點燈 (Keyakizaka)</h4>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 街拍</div>
+                            <ul class="spot-list">
+                                <li><strong>天橋上：</strong> 拍攝櫸坂通車流與東京鐵塔同框。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move" style="background-color: #fdf2f8; border-left: 4px solid #be185d;">
+                    <div class="t-time" style="color:#be185d;">21:00<br>|<br>21:20</div>
+                    <div class="t-content"><span class="tag tag-toei"
+                            style="background:#be185d; color:white;">大江戶線</span>
+                        <h4>六本木 -> 東新宿 (直達)</h4>
+                        <p>E23 -> E02，不轉車。</p>
+                    </div>
+                </div>
+            </div>
+            <!-- DAY 2 -->
+            <div id="day2" class="day-content">
+                <div class="day-header">
+                    <h3>Day 2 (2/22 日): 淺草 & 銀座 & 日本橋</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿: Home'n
+                        Lounge</span>
+                </div>
+                <div class="t-row safe" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
+                    <div class="t-time" style="color:#15803d;">戰術<br>紅利</div>
+                    <div class="t-content"><span class="tag tag-safe">天氣：晴朗 (16°C)</span>
+                        <p>不用寄物，天氣又好，適合在淺草拍和服或步行。</p>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">08:45<br>|<br>09:30</div>
+                    <div class="t-content"><span class="tag tag-pass">地鐵券 Free</span> <span
+                            class="tag tag-toei">大江戶線</span>
+                        <h4>東新宿 -> 藏前 (轉淺草線) -> 淺草</h4>
+                    </div>
+                </div>
+                <div class="t-row activity">
+                    <div class="t-time">09:30<br>|<br>11:30</div>
+                    <div class="t-content"><span class="tag tag-crowd">週日人多</span>
+                        <h4>淺草雷門 & 仲見世通 & 淺草寺</h4>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 淺草寺攻略</div>
+                            <ul class="spot-list">
+                                <li><strong>雷門底部：</strong> 記得抬頭拍大燈籠底部的龍雕刻。</li>
+                                <li><strong>晴空塔合照：</strong> 從淺草寺境內往東看，可拍到五重塔與晴空塔同框。</li>
+                                <li><strong>傳法院通：</strong> 招牌很有特色，適合拍人像。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">11:30<br>|<br>12:00</div>
+                    <div class="t-content"><span class="tag tag-pass">地鐵券 Free</span>
+                        <h4>淺草 -> 押上 (晴空塔)</h4>
+                    </div>
+                </div>
+                <div class="t-row activity">
+                    <div class="t-time">12:00<br>|<br>14:00</div>
+                    <div class="t-content">
+                        <h4>東京晴空塔 (午餐 & 逛街)</h4><span class="budget-badge">💰 預算內</span>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 晴空塔攝影</div>
+                            <ul class="spot-list">
+                                <li><strong>仰角拍攝：</strong> 在押上站出口廣場，用廣角鏡頭由下往上拍，非常有魄力。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">14:00<br>|<br>14:30</div>
+                    <div class="t-content"><span class="tag tag-pass">地鐵券 Free</span>
+                        <h4>押上 -> 銀座</h4>
+                        <p>搭乘淺草線直達東銀座，或銀座線到銀座。</p>
+                    </div>
+                </div>
+                <div class="t-row activity" style="background-color:#fff7ed; border-left: 4px solid #c2410c;">
+                    <div class="t-time" style="color:#c2410c;">14:30<br>|<br>16:45</div>
+                    <div class="t-content"><span class="tag tag-shop"
+                            style="background:#c2410c; color:white;">銀座購物特攻</span>
+                        <h4 style="color:#c2410c;">三大旗艦店巡禮 (步行者天國)</h4>
+                        <p>時間寶貴，請依據進攻 (步行距離極近)：<br>1. **UNIQLO** (14:30-15:15) <span
+                                class="sub-text">12層樓旗艦店</span><br>2. **MUJI** (15:15-16:00) <span
+                                class="sub-text">世界旗艦店，就在隔壁</span><br>3. **LOFT** (16:00-16:45) <span
+                                class="sub-text">文具雜貨，Velvia Hall</span></p>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 銀座步行者天國 (週日限定)</div>
+                            <ul class="spot-list">
+                                <li><strong>路中央：</strong> 只有這時候能在大馬路中間拍照，背景是和光百貨鐘樓，霸氣十足。</li>
+                                <li><strong>Uniqlo 12F：</strong> 旋轉展示櫃與銀座街景窗戶。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">16:45<br>|<br>17:00</div>
+                    <div class="t-content"><span class="tag tag-taxi">計程車</span>
+                        <h4>銀座 -> 日本橋高島屋</h4>
+                        <p>距離不遠，建議搭計程車保留體力。</p>
+                    </div>
+                </div>
+                <div class="t-row activity">
+                    <div class="t-time">17:00<br>|<br>18:15</div>
+                    <div class="t-content">
+                        <h4>日本橋高島屋 S.C.</h4>
+                        <p>參觀重要文化財本館建築，或去東館 5F 寶可夢中心。</p>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 建築攝影</div>
+                            <ul class="spot-list">
+                                <li><strong>本館電梯：</strong> 復古的手動操作電梯與大理石裝潢。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">18:15<br>|<br>18:30</div>
+                    <div class="t-content"><span class="tag tag-walk">步行</span>
+                        <h4>步行至東京車站</h4>
+                        <p>沿途欣賞東京車站周邊夜景。</p>
+                    </div>
+                </div>
+                <div class="t-row meal">
+                    <div class="t-time">18:30<br>|<br>19:45</div>
+                    <div class="t-content">
+                        <h4>晚餐：東京車站 (KITTE / 拉麵街)</h4><span class="budget-badge">💰 預算內</span>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 東京車站夜景</div>
+                            <ul class="spot-list">
+                                <li><strong>KITTE 6F 屋頂花園：</strong> 拍攝東京車站丸之內站舍夜景的最佳位置（免費）。</li>
+                                <li><strong>丸之內南口穹頂：</strong> 站在車站大廳中央往上拍，對稱的幾何圖形非常美。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">19:45<br>|<br>20:30</div>
+                    <div class="t-content"><span class="tag tag-pass">地鐵券 Free</span>
+                        <h4>東京/大手町 -> 東新宿 (返回)</h4>
+                        <p>搭乘丸之內線(東京->新宿三丁目)轉副都心線(->東新宿)。</p>
+                    </div>
+                </div>
+                <div class="t-row alert" style="background-color:#fef2f2;">
+                    <div class="t-time" style="color:#b91c1c;">20:40</div>
+                    <div class="t-content"><span class="tag tag-alert">打包確認</span>
+                        <h4>行李處置 (關鍵時刻)</h4>
+                        <p>打包去京都的大行李，準備明天寄放。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D3 (Two Strict Plans) -->
+            <div id="day3" class="day-content">
+                <div class="day-header" style="background:#4338ca;">
+                    <h3>Day 3 (2/23 一): 河口湖 (雙方案決策)</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿:
+                        HAOSTAY</span>
+                </div>
+                <div class="t-row safe" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
+                    <div class="t-time" style="color:#15803d;">天氣<br>判斷</div>
+                    <div class="t-content"><span class="tag tag-safe">關鍵日</span>
+                        <h4 style="color:#15803d;">請依據今日天氣選擇，將連動 D4</h4>
+                        <p><strong>A 案</strong>：適合晴天、能見度高。<br><strong>B 案</strong>：適合多雲或下雨、想睡飽。</p>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">07:30<br>|<br>09:26</div>
+                    <div class="t-content"><span class="tag tag-reserve">JR 特急</span>
+                        <h4>富士回遊 3號 (直達)</h4>
+                        <p>新宿 -> 河口湖。全車指定席。</p>
+                    </div>
+                </div>
+                <div class="toggle-box">
+                    <div onclick="togglePlan('day3', 'A')" id="btn-day3-A" class="toggle-btn plan-a active">☀️ 方案
+                        A：晴天攻頂<br><span class="text-xs font-normal text-gray-500">(D4 將安排購物)</span></div>
+                    <div onclick="togglePlan('day3', 'B')" id="btn-day3-B" class="toggle-btn plan-b">☁️ 方案
+                        B：輕鬆漫遊<br><span class="text-xs font-normal text-gray-500">(D4 將安排補考)</span></div>
+                </div>
+                <!-- Plan A -->
+                <div id="day3-plan-A">
+                    <div class="t-row move" style="background-color: #fff7ed; border-left: 4px solid #ea580c;">
+                        <div class="t-time" style="color:#c2410c;">09:12</div>
+                        <div class="t-content"><span class="tag tag-warn"
+                                style="background:#ea580c; color:white; border-color:#c2410c;">下吉田跳車</span>
+                            <h4 style="color:#c2410c;">方案 A 關鍵：提早下車！</h4>
+                            <p><strong>⚠️ 為了把握早晨陽光，直接在下吉田下車攻忠靈塔。</strong></p>
+                        </div>
+                    </div>
+                    <div class="t-row activity">
+                        <div class="t-time">09:30<br>|<br>10:30</div>
+                        <div class="t-content">
+                            <h4>新倉山淺間公園 (忠靈塔)</h4>
+                            <p>爬 398 階梯。早上去光線順光，富士山最美。</p>
+                        </div>
+                    </div>
+                    <div class="t-row move">
+                        <div class="t-time">10:46</div>
+                        <div class="t-content"><span class="tag tag-private">富士急行線</span>
+                            <h4>下吉田 -> 河口湖</h4>
+                        </div>
+                    </div>
+                    <div class="t-row activity">
+                        <div class="t-time">11:30</div>
+                        <div class="t-content">
+                            <h4>天上山纜車 & 遊覽船</h4>
+                            <p>中午人潮高峰，速戰速決。</p>
+                        </div>
+                    </div>
+                    <div class="t-row activity">
+                        <div class="t-time">14:00</div>
+                        <div class="t-content">
+                            <h4>忍野八海</h4>
+                        </div>
+                    </div>
+                    <div class="t-row move">
+                        <div class="t-time">16:30</div>
+                        <div class="t-content">
+                            <h4>前往 HAOSTAY</h4>
+                            <p>今日體力消耗大，明天 (D4) 將切換為「購物休息模式」。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Plan B -->
+                <div id="day3-plan-B" class="hidden-plan">
+                    <div class="t-row move">
+                        <div class="t-time">09:26</div>
+                        <div class="t-content">
+                            <h4>抵達河口湖站 (終點)</h4>
+                            <p>不用跳車，舒服坐到終點。</p>
+                        </div>
+                    </div>
+                    <div class="t-row activity" style="background-color: #f0f9ff; border-left: 4px solid #0284c7;">
+                        <div class="t-time" style="color:#0369a1;">10:00</div>
+                        <div class="t-content"><span class="tag tag-safe"
+                                style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc;">標準行程</span>
+                            <h4 style="color:#0369a1;">方案 B：天上山纜車 (Kachi Kachi)</h4>
+                            <p>先去搭纜車，避開下午人潮。今天不爬樓梯。</p>
+                        </div>
+                    </div>
+                    <div class="t-row activity">
+                        <div class="t-time">12:00</div>
+                        <div class="t-content">
+                            <h4>河口湖音樂盒之森 / 忍野八海</h4>
+                            <p>擇一參觀，保持彈性。</p>
+                        </div>
+                    </div>
+                    <div class="t-row hotel">
+                        <div class="t-time">17:15</div>
+                        <div class="t-content">
+                            <h4>入住：HAOSTAY</h4>
+                            <p>忠靈塔留給明天 (D4) 早上補考。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D4 -->
+            <div id="day4" class="day-content">
+                <div class="day-header" style="background:#ef4444;">
+                    <h3>Day 4 (2/24 二): 富士回遊 & 移動 (連動執行)</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿:
+                        MIMARU 京都</span>
+                </div>
+                <div class="toggle-box">
+                    <div id="btn-day4-RELAX" class="toggle-btn locked active">🛍️ 方案 A 續章：悠閒購物<br><span
+                            class="text-xs font-normal text-gray-500">(因 D3 已攻頂)</span></div>
+                    <div id="btn-day4-STD" class="toggle-btn locked">🏯 方案 B 續章：補考忠靈塔<br><span
+                            class="text-xs font-normal text-gray-500">(因 D3 未去)</span></div>
+                </div>
+                <!-- Plan RELAX -->
+                <div id="day4-plan-RELAX">
+                    <div class="t-row safe" style="background-color: #fff7ed; border-left: 4px solid #ea580c;">
+                        <div class="t-time" style="color:#c2410c;">戰術<br>紅利</div>
+                        <div class="t-content"><span class="tag tag-shop">先苦後甘</span>
+                            <h4 style="color:#c2410c;">執行方案 A 續章：購物日</h4>
+                            <p>因為昨天已經把景點全破，今天可以享受飯店早餐，專心購物。</p>
+                        </div>
+                    </div>
+                    <div class="t-row activity">
+                        <div class="t-time">10:45<br>|<br>14:00</div>
+                        <div class="t-content"><span class="tag tag-shop">全室內</span>
+                            <h4>富士山站 Q-STA 百貨</h4>
+                            <p>無印良品、Seria 百元店、Montbell。午餐也在這裡解決。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Plan STD -->
+                <div id="day4-plan-STD" class="hidden-plan">
+                    <div class="t-row alert" style="background-color: #f0f9ff; border-left: 4px solid #0284c7;">
+                        <div class="t-time" style="color:#0369a1;">早起<br>補考</div>
+                        <div class="t-content"><span class="tag tag-warn"
+                                style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc;">精實行程</span>
+                            <h4 style="color:#0369a1;">執行方案 B 續章：補考日</h4>
+                            <p>昨天沒去忠靈塔，今天必須補上。</p>
+                        </div>
+                    </div>
+                    <div class="t-row activity">
+                        <div class="t-time">09:30<br>|<br>11:30</div>
+                        <div class="t-content">
+                            <h4>新倉山淺間公園 (忠靈塔)</h4>
+                            <p>退房後直接前往。</p>
+                        </div>
+                    </div>
+                    <div class="t-row meal">
+                        <div class="t-time">12:30</div>
+                        <div class="t-content">
+                            <h4>午餐：吉田烏龍麵</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- Shared -->
+                <div class="t-row move">
+                    <div class="t-time">15:08<br>|<br>16:58</div>
+                    <div class="t-content"><span class="tag tag-reserve">JR 特急</span>
+                        <h4>富士回遊 36號 (富士山站上車)</h4>
+                        <p>大家都在富士山站集合上車。</p>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">17:30</div>
+                    <div class="t-content"><span class="tag tag-taxi">計程車</span>
+                        <h4>新宿 -> 品川 (轉乘新幹線)</h4>
+                    </div>
+                </div>
+                <div class="t-row move" style="background-color: #e0e7ff; border-left: 4px solid #4f46e5;">
+                    <div class="t-time" style="color: #3730a3;">19:40</div>
+                    <div class="t-content"><span class="tag tag-jr">新幹線</span>
+                        <h4>Nozomi (品川 -> 京都)</h4>
+                        <p>前往京都。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D5 -->
+            <div id="day5" class="day-content">
+                <div class="day-header" style="background:#f59e0b;">
+                    <h3>Day 5 (2/25 三): 伊根 vs 嵐山 (雙方案決策)</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿:
+                        MIMARU 京都</span>
+                </div>
+                <div class="p-4 bg-yellow-100 border-l-4 border-yellow-600 mb-2">
+                    <h4 class="text-yellow-800 font-bold text-lg mb-2">⚠️ 強風注意報</h4>
+                    <p class="text-yellow-900 text-sm">伊根風速預測 12m/s。若船不開，強烈建議執行方案 B。</p>
+                </div>
+                <div class="toggle-box">
+                    <div onclick="togglePlan('day5', 'A')" id="btn-day5-A" class="toggle-btn plan-a active">🌊 方案
+                        A：伊根遠征<br><span class="text-xs font-normal text-gray-500">(D6 必去清水寺)</span></div>
+                    <div onclick="togglePlan('day5', 'B')" id="btn-day5-B" class="toggle-btn plan-b">⚡ 方案
+                        B：閃電折返<br><span class="text-xs font-normal text-gray-500">(D6 解鎖岡山)</span></div>
+                </div>
+                <!-- Plan A -->
+                <div id="day5-plan-A">
+                    <div class="t-row move" style="background-color: #fff7ed; border-left: 4px solid #ea580c;">
+                        <div class="t-time" style="color:#c2410c;">07:32</div>
+                        <div class="t-content"><span class="tag tag-reserve">JR 特急</span>
+                            <h4>京都 -> 西舞鶴 -> 天橋立</h4>
+                            <p>搭乘赤松號觀光列車。今日重點在海邊。</p>
+                        </div>
+                    </div>
+                    <div class="t-row activity">
+                        <div class="t-time">13:00</div>
+                        <div class="t-content"><span class="tag tag-warn">伊根</span>
+                            <h4>伊根舟屋 & 遊覽船</h4>
+                            <p>舟屋日和咖啡廳、餵海鷗。</p>
+                        </div>
+                    </div>
+                    <div class="t-row move">
+                        <div class="t-time">18:09</div>
+                        <div class="t-content">
+                            <h4>返回京都</h4>
+                            <p>回到京都已晚，明天 (D6) 務必安排市區經典行程 (清水寺)。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Plan B -->
+                <div id="day5-plan-B" class="hidden-plan">
+                    <div class="t-row move" style="background-color: #f0f9ff; border-left: 4px solid #0284c7;">
+                        <div class="t-time" style="color:#0369a1;">07:32</div>
+                        <div class="t-content"><span class="tag tag-reserve">JR 特急</span>
+                            <h4>京都 -> 西舞鶴 -> 天橋立</h4>
+                            <p>依然搭乘赤松號看海，但不去伊根吹風。</p>
+                        </div>
+                    </div>
+                    <div class="t-row move" style="background-color: #fdf2f8; border-left: 4px solid #be185d;">
+                        <div class="t-time" style="color:#be185d;">11:55</div>
+                        <div class="t-content"><span class="tag tag-reserve">閃電撤退</span>
+                            <h4>天橋立 -> 京都 (14:07抵達)</h4>
+                            <p>吃完午餐立刻回頭。</p>
+                        </div>
+                    </div>
+                    <div class="t-row activity">
+                        <div class="t-time">14:40</div>
+                        <div class="t-content">
+                            <h4>嵐山快閃 (竹林 & 天龍寺)</h4>
+                            <p>利用下午把嵐山走完。<strong>此舉將解放 D6 的行程空間。</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D6 -->
+            <div id="day6" class="day-content">
+                <div class="day-header" style="background:#059669;">
+                    <h3>Day 6 (2/26 四): 經典 vs 岡山 (連動執行)</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿:
+                        MIMARU 京都</span>
+                </div>
+                <div class="toggle-box">
+                    <div id="btn-day6-A" class="toggle-btn locked active">⛩️ 方案 A 續章：經典京都<br><span
+                            class="text-xs font-normal text-gray-500">(因 D5 跑遠)</span></div>
+                    <div id="btn-day6-B" class="toggle-btn locked">🍑 方案 B 續章：岡山倉敷<br><span
+                            class="text-xs font-normal text-gray-500">(因 D5 已去嵐山)</span></div>
+                </div>
+                <!-- Plan A -->
+                <div id="day6-plan-A">
+                    <div class="t-row safe" style="background-color: #fff7ed; border-left: 4px solid #ea580c;">
+                        <div class="t-time" style="color:#c2410c;">補課<br>行程</div>
+                        <div class="t-content"><span class="tag tag-safe">經典必遊</span>
+                            <h4 style="color:#c2410c;">執行方案 A 續章：京都經典</h4>
+                            <p>因為昨天都在搭車去伊根，今天必須把京都最重要的「清水寺」與「嵐山」走完。</p>
+                        </div>
+                    </div>
+                    <div class="t-row activity">
+                        <div class="t-time">06:20</div>
+                        <div class="t-content">
+                            <h4>清水寺 & 二年坂 (早起避人潮)</h4>
+                        </div>
+                    </div>
+                    <div class="t-row activity">
+                        <div class="t-time">12:00</div>
+                        <div class="t-content">
+                            <h4>嵐山散策</h4>
+                            <p>竹林小徑、渡月橋。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Plan B -->
+                <div id="day6-plan-B" class="hidden-plan">
+                    <div class="t-row safe" style="background-color: #f0f9ff; border-left: 4px solid #0284c7;">
+                        <div class="t-time" style="color:#0369a1;">紅利<br>解鎖</div>
+                        <div class="t-content"><span class="tag tag-safe">晴天之國</span>
+                            <h4 style="color:#0369a1;">執行方案 B 續章：岡山遠征</h4>
+                            <p>昨天下午已解決嵐山，今天解鎖「山陽新幹線」去岡山，發揮 JR Pass 最大價值。</p>
+                        </div>
+                    </div>
+                    <div class="t-row move">
+                        <div class="t-time">09:00</div>
+                        <div class="t-content"><span class="tag tag-reserve">新幹線</span>
+                            <h4>新大阪 -> 岡山 (45分鐘)</h4>
+                        </div>
+                    </div>
+                    <div class="t-row activity">
+                        <div class="t-time">10:30</div>
+                        <div class="t-content">
+                            <h4>倉敷美觀地區</h4>
+                            <p>小橋流水，景色完全不同於京都。</p>
+                        </div>
+                    </div>
+                    <div class="t-row activity">
+                        <div class="t-time">14:00</div>
+                        <div class="t-content">
+                            <h4>岡山後樂園 / Outlet</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DAYS 7-9 TO BE INSERTED NEXT to be safe -->
+
+            <!-- D7 (UPDATED: Nara + Osaka Castle Night + Umeda Optional) -->
+            <div id="day7" class="day-content">
+                <div class="day-header" style="background:#059669;">
+                    <h3>Day 7 (2/27 五): 宇治・奈良・大阪城夜景</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿: MIMARU
+                        京都</span>
+                </div>
+                <div class="t-row safe" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
+                    <div class="t-time" style="color:#15803d;">戰術<br>串聯</div>
+                    <div class="t-content">
+                        <span class="tag tag-safe">JR PASS 效益極大化</span>
+                        <p>宇治(早) -> 奈良(午) -> 大阪城(夜) -> (可選梅田) -> 京都。</p>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">06:20<br>|<br>06:30</div>
+                    <div class="t-content"><span class="tag tag-jr">JR 奈良線</span>
+                        <h4>京都 -> 稻荷站</h4>
+                        <p>首班車。</p>
+                    </div>
+                </div>
+                <div class="t-row activity">
+                    <div class="t-time">06:30<br>|<br>08:30</div>
+                    <div class="t-content"><span class="tag tag-leg">極限早鳥</span>
+                        <h4>伏見稻荷大社 (千本鳥居)</h4>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 千本鳥居戰術</div>
+                            <ul class="spot-list">
+                                <li><strong>無人空景：</strong> 走到「奧社」之後，人潮少 90%。</li>
+                                <li><strong>光影：</strong> 捕捉晨光透過鳥居的光斑。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">08:30<br>|<br>09:00</div>
+                    <div class="t-content"><span class="tag tag-jr">JR 奈良線</span>
+                        <h4>稻荷 -> 宇治站</h4>
+                    </div>
+                </div>
+                <div class="t-row meal">
+                    <div class="t-time">09:00<br>|<br>10:30</div>
+                    <div class="t-content">
+                        <h4>早午餐：中村藤吉 (本店/平等院店)</h4>
+                        <p>趁人少先吃。</p>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 美食攝影</div>
+                            <ul class="spot-list">
+                                <li><strong>抹茶聖代：</strong> 竹筒裝的抹茶凍。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row activity">
+                    <div class="t-time">10:30<br>|<br>12:30</div>
+                    <div class="t-content">
+                        <h4>宇治平等院</h4>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 平等院攝影</div>
+                            <ul class="spot-list">
+                                <li><strong>鳳凰堂倒影：</strong> 阿字池正面（日幣 10 元圖案）。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">12:30<br>|<br>13:10</div>
+                    <div class="t-content"><span class="tag tag-jr">JR 奈良線</span>
+                        <h4>宇治 -> 奈良站 (快速)</h4>
+                    </div>
+                </div>
+                <div class="t-row activity">
+                    <div class="t-time">13:30<br>|<br>16:15</div>
+                    <div class="t-content">
+                        <h4>奈良公園 & 東大寺</h4>
+                        <p>搭公車到東大寺，回程餵鹿。</p>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 奈良攝影</div>
+                            <ul class="spot-list">
+                                <li><strong>小鹿合照：</strong> 拿鹿仙貝引誘鹿到樹下，背景比較乾淨。</li>
+                                <li><strong>東大寺大佛：</strong> 拍攝大佛的仰角。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move" style="background-color: #fff7ed; border-left: 4px solid #c2410c;">
+                    <div class="t-time" style="color:#c2410c;">16:26<br>|<br>17:15</div>
+                    <div class="t-content"><span class="tag tag-jr" style="background:#15803d; color:white;">JR
+                            大和路快速</span>
+                        <h4 style="color:#c2410c;">奈良 -> 天王寺 -> 大阪城公園</h4>
+                        <p>同月台轉乘環狀線。</p>
+                    </div>
+                </div>
+                <div class="t-row activity" style="background-color: #312e81; color: white;">
+                    <div class="t-time" style="color: #a5b4fc; border-right-color: #4338ca;">17:30<br>|<br>18:30</div>
+                    <div class="t-content"><span class="tag tag-safe"
+                            style="background:#16a34a; border-color: #15803d;">夜間散策</span>
+                        <h4 style="color: white;">大阪城公園 (外觀點燈)</h4>
+                        <div class="spot-info-box"
+                            style="background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);">
+                            <div class="spot-info-title" style="color:white;">📸 大阪城夜拍</div>
+                            <ul class="spot-list" style="color:white;">
+                                <li><strong>極樂橋：</strong> 拍攝點燈的天守閣倒映在護城河上。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row meal">
+                    <div class="t-time">18:30<br>|<br>20:00</div>
+                    <div class="t-content">
+                        <h4>晚餐：JO-TERRACE OSAKA</h4>
+                        <p>推薦：Gram 鬆餅、章魚燒道樂。</p>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">20:00<br>|<br>20:15</div>
+                    <div class="t-content"><span class="tag tag-jr">JR 環狀線</span>
+                        <h4>大阪城公園 -> 大阪站</h4>
+                        <p>移動到梅田。</p>
+                    </div>
+                </div>
+                <div class="t-row activity"
+                    style="background-color: #1e293b; color: white; border-left: 4px solid #f59e0b;">
+                    <div class="t-time" style="color: #fbbf24;">20:30<br>|<br>21:30</div>
+                    <div class="t-content"><span class="tag tag-leg">體力挑戰</span>
+                        <h4 style="color: #fbbf24;">(可選) 梅田藍天大廈 空中庭園</h4>
+                        <p>若還有體力才去。需從大阪站走 10-15 分鐘。</p>
+                        <div class="spot-info-box"
+                            style="background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);">
+                            <div class="spot-info-title" style="color:white;">📸 藍天大廈攝影</div>
+                            <ul class="spot-list" style="color:white;">
+                                <li><strong>空中手扶梯：</strong> 必拍的科幻場景，彷彿通往宇宙。</li>
+                                <li><strong>360度夜景：</strong> 屋頂是露天的，風大請保暖。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">21:45<br>|<br>22:15</div>
+                    <div class="t-content"><span class="tag tag-jr">JR 新快速</span>
+                        <h4>大阪 -> 京都</h4>
+                        <p>末班車還早，不用擔心。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D8 -->
+            <div id="day8" class="day-content">
+                <div class="day-header" style="background:#059669;">
+                    <h3>Day 8 (2/28 六): 勝尾寺 & 臨空城</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿:
+                        關西機場飯店</span>
+                </div>
+                <div class="t-row safe" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
+                    <div class="t-time" style="color:#15803d;">天氣<br>完美</div>
+                    <div class="t-content"><span class="tag tag-safe">晴朗 (12°C)</span></div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">07:00<br>|<br>07:30</div>
+                    <div class="t-content"><span class="tag tag-jr">JR 京都線</span>
+                        <h4>京都 -> 新大阪 (寄放行李)</h4>
+                        <p>行李寄放在新大阪站 Coin Locker (數量多)。</p>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">07:30<br>|<br>08:45</div>
+                    <div class="t-content"><span class="tag tag-metro">御堂筋線</span>
+                        <h4>新大阪 -> 千里中央 -> 勝尾寺</h4>
+                        <p>搭乘 29 號公車。</p>
+                    </div>
+                </div>
+                <div class="t-row activity">
+                    <div class="t-time">09:30<br>|<br>11:30</div>
+                    <div class="t-content">
+                        <h4>勝尾寺 (達摩寺)</h4>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 勝尾寺攝影</div>
+                            <ul class="spot-list">
+                                <li><strong>達摩牆：</strong> 尋找堆滿小達摩的石牆或縫隙。</li>
+                                <li><strong>大門與池塘：</strong> 進門後的噴煙池塘。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">11:30<br>|<br>12:30</div>
+                    <div class="t-content">
+                        <h4>返回新大阪</h4>
+                    </div>
+                </div>
+                <div class="t-row meal">
+                    <div class="t-time">12:30<br>|<br>13:30</div>
+                    <div class="t-content">
+                        <h4>午餐：新大阪站</h4>
+                    </div>
+                </div>
+                <div class="t-row activity">
+                    <div class="t-time">13:30<br>|<br>15:30</div>
+                    <div class="t-content">
+                        <h4>心齋橋 / 梅田 (自由時間)</h4>
+                        <p>最後衝刺補貨。</p>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">16:00<br>|<br>17:00</div>
+                    <div class="t-content"><span class="tag tag-reserve">特急 Haruka</span>
+                        <h4>新大阪 -> 臨空城 (Rinku Town)</h4>
+                        <p>領回行李後搭車。</p>
+                    </div>
+                </div>
+                <div class="t-row activity">
+                    <div class="t-time">17:00<br>|<br>20:00</div>
+                    <div class="t-content">
+                        <h4>臨空城 Outlet</h4>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 臨空城攝影</div>
+                            <ul class="spot-list">
+                                <li><strong>摩天輪夕陽：</strong> 傍晚時分，拍攝摩天輪剪影與夕陽 (Magic Hour)。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row hotel">
+                    <div class="t-time">20:30</div>
+                    <div class="t-content">
+                        <h4>入住：關西機場附近飯店</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D9 -->
+            <div id="day9" class="day-content">
+                <div class="day-header" style="background:#4b5563;">
+                    <h3>Day 9 (3/1 日): 返家</h3>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">08:10</div>
+                    <div class="t-content">
+                        <h4>抵達關西機場 T2</h4>
+                        <p>預留 2 小時 Check-in。</p>
+                        <div class="spot-info-box">
+                            <div class="spot-info-title">📸 最後一拍</div>
+                            <ul class="spot-list">
+                                <li><strong>機場打卡：</strong> 離開前在機場大廳或飛機窗口拍張「再見日本」的照片作為 Ending。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-row move">
+                    <div class="t-time">10:10</div>
+                    <div class="t-content">
+                        <h4>飛機起飛</h4>
+                        <p>平安返家。</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- ==================== SECTION: WEATHER ==================== -->
+        <div id="section-weather" style="display:none;">
+            <div class="day-content active" style="margin-top:0;">
+                <div class="day-header" style="background:#0284c7;">
+                    <h3>🌤️ 氣象戰情室 (2/18 更新：連結彙整)</h3>
+                </div>
+                <div class="p-4 bg-white rounded-lg shadow border border-indigo-100 mb-6">
+                    <h4 class="text-indigo-800 font-bold mb-3 flex items-center"><span class="text-xl mr-2">📡</span>
+                        戰術氣象中心 (Live Links)</h4>
+                    <p class="text-sm text-gray-600 mb-4"><strong class="text-red-600">⚠️ 請務必使用 Yahoo! JAPAN
+                            (日文版)，勿用手機內建 Yahoo/AccuWeather。</strong><br>國際版無法預測日本微氣候（如地形雨）。請直接點擊下方連結：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border p-3 rounded bg-blue-50 border-blue-200">
+                            <strong class="text-blue-800 block mb-1">Tenki.jp (穿搭/生活指數)</strong>
+                            <a href="https://tenki.jp/forecast/3/16/4410/13104/" target="_blank"
+                                class="ext-link-btn tenki">東京 (新宿)</a>
+                            <a href="https://tenki.jp/forecast/6/29/4610/26106/" target="_blank"
+                                class="ext-link-btn tenki">京都 (市區)</a>
+                        </div>
+                        <div class="border p-3 rounded bg-yellow-50 border-yellow-200">
+                            <strong class="text-yellow-800 block mb-1">Yahoo! (JP) 雨雲雷達 (躲雨神器)</strong>
+                            <a href="https://weather.yahoo.co.jp/weather/zoomradar/" target="_blank"
+                                class="ext-link-btn yahoo">全日本雷達</a>
+                        </div>
+                        <div class="border p-3 rounded bg-green-50 border-green-200">
+                            <strong class="text-green-800 block mb-1">SCW (雲量預測)</strong>
+                            <a href="https://supercweather.com/" target="_blank" class="ext-link-btn scw">超級氣象圖
+                                (SCW)</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 bg-red-50 mb-4 border-l-4 border-red-500">
+                    <p class="text-red-800 text-sm">
+                        <strong>⚠️ 最新戰術警報 (2/17 更新)：</strong> <br>
+                        <strong>1. 暖鋒效應：</strong> D3 (2/23) 上午異常溫暖 (13°C)，但 <strong>14:00 後</strong> 降雨機率 80%。<br>
+                        <strong>2. 強風確認：</strong> D5 (2/25) 伊根風速上修至 <strong>12m/s (強風)</strong>，船班停駛幾乎確定。
+                    </p>
+                </div>
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <table class="weather-table">
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>地點</th>
+                                <th>預測概況</th>
+                                <th>氣溫</th>
+                                <th>戰術影響</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>2/21 (六)</strong></td>
+                                <td>東京</td>
+                                <td>☀️ 晴朗</td>
+                                <td><span class="temp-high">16°C</span> / <span class="temp-low">1°C</span></td>
+                                <td><span class="tag tag-safe">展望台 Go</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2/22 (日)</strong></td>
+                                <td>東京</td>
+                                <td>⛅ 多雲時晴</td>
+                                <td><span class="temp-high">19°C</span> / <span class="temp-low">5°C</span></td>
+                                <td><span class="tag tag-safe">超舒適</span></td>
+                            </tr>
+                            <tr style="background-color: #fffbeb;">
+                                <td><strong>2/23 (一)</strong></td>
+                                <td>河口湖</td>
+                                <td>☁️ <strong>轉雨 (14:00~)</strong></td>
+                                <td><span class="temp-high">15°C</span> / <span class="temp-low">9°C</span></td>
+                                <td><span class="tag tag-alert">上午決勝負</span></td>
+                            </tr>
+                            <tr style="background-color: #fef2f2;">
+                                <td><strong>2/24 (二)</strong></td>
+                                <td>河口湖</td>
+                                <td>🌧️ <strong>雨/混雪</strong></td>
+                                <td><span class="temp-high">13°C</span> / <span class="temp-low">7°C</span></td>
+                                <td><span class="tag tag-alert">放棄逆富士</span></td>
+                            </tr>
+                            <tr style="background-color: #fff7ed;">
+                                <td><strong>2/25 (三)</strong></td>
+                                <td>伊根</td>
+                                <td>💨 <strong>強風雨</strong></td>
+                                <td><span class="temp-high">9°C</span> / <span class="temp-low">5°C</span></td>
+                                <td><span class="tag tag-alert">船班停駛</span></td>
+                            </tr>
+                            <tr style="background-color: #f0f9ff;">
+                                <td><strong>2/26 (四)</strong></td>
+                                <td>京都</td>
+                                <td>☁️ 陰短雨</td>
+                                <td><span class="temp-high">9°C</span> / <span class="temp-low">3°C</span></td>
+                                <td><span class="tag tag-safe">柔和光線</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2/27 (五)</strong></td>
+                                <td>奈良</td>
+                                <td>☁️ 陰天</td>
+                                <td><span class="temp-high">8°C</span> / <span class="temp-low">1°C</span></td>
+                                <td><span class="tag tag-safe">適合餵鹿</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2/28 (六)</strong></td>
+                                <td>大阪</td>
+                                <td>☀️ 晴朗</td>
+                                <td><span class="temp-high">13°C</span> / <span class="temp-low">5°C</span></td>
+                                <td><span class="tag tag-safe">完美收尾</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SECTION: BOOKING LIST (INTERACTIVE) ==================== -->
+        <div id="section-booking" style="display:none;">
+            <div class="day-content active" style="margin-top:0;">
+                <div class="day-header" style="background:#be185d;">
+                    <h3>✅ 預定與待辦總表 (點擊可打勾)</h3>
+                </div>
+                <div class="p-4 bg-red-50 mb-4 border-l-4 border-red-500">
+                    <h4 class="text-red-700 mb-2 font-bold">🔥 最終查核清單 (Final Check)</h4>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'check_esim')"><input type="checkbox"
+                            id="check_esim">
+                        <div class="item-content w-full ml-2"><strong>網卡/eSIM</strong></div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'check_insurance')"><input type="checkbox"
+                            id="check_insurance">
+                        <div class="item-content w-full ml-2"><strong>旅遊保險</strong></div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'check_vjw')"><input type="checkbox"
+                            id="check_vjw">
+                        <div class="item-content w-full ml-2"><strong>Visit Japan Web</strong></div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'check_atm')"><input type="checkbox"
+                            id="check_atm">
+                        <div class="item-content w-full ml-2"><strong>提款卡密碼</strong></div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'check_app')"><input type="checkbox"
+                            id="check_app">
+                        <div class="item-content w-full ml-2"><strong>App 下載</strong></div>
+                    </label>
+                </div>
+                <div class="p-4 border-b border-gray-100">
+                    <h4 class="text-green-700 mb-3">🆗 已完成預定 (Done)</h4>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'done_flight')"><input type="checkbox"
+                            id="done_flight" checked>
+                        <div class="item-content w-full ml-2"><strong>機票</strong></div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'done_skyliner')"><input type="checkbox"
+                            id="done_skyliner" checked>
+                        <div class="item-content w-full ml-2"><strong>Skyliner 車票</strong></div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'done_shibuya')"><input type="checkbox"
+                            id="done_shibuya" checked>
+                        <div class="item-content w-full ml-2"><strong>SHIBUYA SKY</strong></div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'done_teamlab')"><input type="checkbox"
+                            id="done_teamlab" checked>
+                        <div class="item-content w-full ml-2"><strong>TeamLab</strong></div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'done_roppongi')"><input type="checkbox"
+                            id="done_roppongi" checked>
+                        <div class="item-content w-full ml-2"><strong>六本木觀景台</strong></div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'done_shinkansen')"><input type="checkbox"
+                            id="done_shinkansen" checked>
+                        <div class="item-content w-full ml-2"><strong>新幹線車票</strong></div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'done_jrpass')"><input type="checkbox"
+                            id="done_jrpass" checked>
+                        <div class="item-content w-full ml-2"><strong>JR 關西廣域周遊券</strong></div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'done_akamatsu')"><input type="checkbox"
+                            id="done_akamatsu" checked>
+                        <div class="item-content w-full ml-2"><strong>觀光列車 (赤松號)</strong></div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'done_fuji')"><input type="checkbox"
+                            id="done_fuji" checked>
+                        <div class="item-content w-full ml-2"><strong>JR 富士回遊</strong></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SECTION: PACKING ==================== -->
+        <div id="section-packing" style="display:none;">
+            <div class="day-content active" style="margin-top:0;">
+                <div class="day-header" style="background:#d97706;">
+                    <h3>🧳 專業分流：隨身背包 vs 託運大行李</h3>
+                </div>
+                <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Left Column: Carry On -->
+                    <div>
+                        <div class="mb-4 bg-yellow-50 p-3 rounded shadow-sm border border-yellow-300">
+                            <h4
+                                class="text-yellow-800 border-b border-yellow-200 pb-1 mb-2 font-bold flex items-center">
+                                <span class="text-xl mr-2">🎒</span> 隨身背包 (Carry-On)
+                            </h4>
+                            <p class="text-xs text-yellow-700 mb-2"><strong>⚠️ 關鍵規則：</strong>
+                                鋰電池/行動電源「嚴禁託運」。護照、現金、藥品請隨身攜帶。</p>
+                            <div class="mb-3">
+                                <h5 class="text-sm font-bold text-gray-700 mb-1">文件與貴重品</h5>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_passport">
+                                    <div class="item-content w-full ml-2"><strong>護照</strong> (效期>6個月)</div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_vjw">
+                                    <div class="item-content w-full ml-2"><strong>VJW QR Code 截圖</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_cash">
+                                    <div class="item-content w-full ml-2"><strong>日幣現金 / 信用卡</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_ic">
+                                    <div class="item-content w-full ml-2"><strong>Suica / ICOCA</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_pen">
+                                    <div class="item-content w-full ml-2"><strong>原子筆</strong> (填表用)</div>
+                                </label>
+                            </div>
+                            <div class="mb-3">
+                                <h5 class="text-sm font-bold text-gray-700 mb-1">電子與通訊 (安檢重點)</h5>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_phone">
+                                    <div class="item-content w-full ml-2"><strong>手機</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_powerbank">
+                                    <div class="item-content w-full ml-2 font-bold text-red-600">行動電源 (必隨身)</div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_sim_tool">
+                                    <div class="item-content w-full ml-2"><strong>SIM卡針 / 網卡</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_wifi">
+                                    <div class="item-content w-full ml-2"><strong>Pocket Wifi</strong> (若有)</div>
+                                </label>
+                            </div>
+                            <div class="mb-3">
+                                <h5 class="text-sm font-bold text-gray-700 mb-1">機上與落地急用</h5>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_med_chronic">
+                                    <div class="item-content w-full ml-2"><strong>個人常備藥</strong> (隨身份)</div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_glasses">
+                                    <div class="item-content w-full ml-2"><strong>眼鏡 / 墨鏡</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_tissue">
+                                    <div class="item-content w-full ml-2"><strong>衛生紙 / 濕紙巾</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_scarf">
+                                    <div class="item-content w-full ml-2"><strong>圍巾</strong> (機上/落地保暖)</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right Column: Checked -->
+                    <div>
+                        <div class="mb-4 bg-blue-50 p-3 rounded shadow-sm border border-blue-200">
+                            <h4 class="text-blue-800 border-b border-blue-200 pb-1 mb-2 font-bold flex items-center">
+                                <span class="text-xl mr-2">🧳</span> 託運大行李 (Checked)
+                            </h4>
+                            <p class="text-xs text-blue-700 mb-2"><strong>⚠️ 關鍵規則：</strong> 液體>100ml、刀剪工具必須託運。</p>
+                            <div class="mb-3">
+                                <h5 class="text-sm font-bold text-gray-700 mb-1">液體 / 盥洗 / 工具</h5>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_face_wash">
+                                    <div class="item-content w-full ml-2"><strong>洗面乳 / 卸妝 / 乳液</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_sunscreen">
+                                    <div class="item-content w-full ml-2"><strong>防曬乳 / 液體化妝品</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_shaver">
+                                    <div class="item-content w-full ml-2"><strong>指甲剪 / 刮鬍刀</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_tooth">
+                                    <div class="item-content w-full ml-2"><strong>牙刷牙膏</strong></div>
+                                </label>
+                            </div>
+                            <div class="mb-3">
+                                <h5 class="text-sm font-bold text-gray-700 mb-1">衣物 (建議使用壓縮袋)</h5>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_heat_extra">
+                                    <div class="item-content w-full ml-2"><strong>極暖發熱衣 x2</strong> (伊根用)</div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_heat_reg">
+                                    <div class="item-content w-full ml-2"><strong>一般發熱衣 x2</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_pants_warm">
+                                    <div class="item-content w-full ml-2"><strong>防風保暖褲</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_pants_reg">
+                                    <div class="item-content w-full ml-2"><strong>舒適長褲</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_mid_tops">
+                                    <div class="item-content w-full ml-2"><strong>上衣 (毛衣/大學T) x3</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_pajama">
+                                    <div class="item-content w-full ml-2"><strong>睡衣</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_socks">
+                                    <div class="item-content w-full ml-2"><strong>厚襪子 x5</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_underwear_set">
+                                    <div class="item-content w-full ml-2"><strong>內褲 x5</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_beanie_cap">
+                                    <div class="item-content w-full ml-2"><strong>毛帽 / 手套</strong> (備用)</div>
+                                </label>
+                            </div>
+                            <!-- Misc -->
+                            <div class="mb-3">
+                                <h5 class="text-sm font-bold text-gray-700 mb-1">雜物 & 藥品庫</h5>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_cables">
+                                    <div class="item-content w-full ml-2"><strong>充電頭 / 備用線</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_umbrella_fold">
+                                    <div class="item-content w-full ml-2"><strong>折疊傘</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_laundry_bag">
+                                    <div class="item-content w-full ml-2"><strong>洗衣袋 / 夾鏈袋</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_shoes_spare">
+                                    <div class="item-content w-full ml-2"><strong>備用鞋 / 防水噴霧</strong></div>
+                                </label>
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
+                                        id="pack_med_pain">
+                                    <div class="item-content w-full ml-2"><strong>藥包 (感冒/止痛/腸胃)</strong></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ==================== SECTION: HOTELS ==================== -->
+        <div id="section-hotels" style="display:none;">
+            <div class="day-content active" style="margin-top:0;">
+                <div class="day-header" style="background:#4338ca;">
+                    <h3>🏨 住宿情報</h3>
+                </div>
+                <div class="t-row hotel">
+                    <div class="t-time">D1-D3</div>
+                    <div class="t-content">
+                        <h4>東京：Home 'n Lounge</h4>
+                        <p>交通：東新宿站 A1 出口步行 3 分 (大江戶線/副都心線)。</p>
+                    </div>
+                </div>
+                <div class="t-row hotel">
+                    <div class="t-time">D3-D4</div>
+                    <div class="t-content">
+                        <h4>河口湖：HAOSTAY</h4>
+                        <p>交通：河口湖北岸 (近音樂盒之森)。</p>
+                    </div>
+                </div>
+                <div class="t-row hotel">
+                    <div class="t-time">D4-D8</div>
+                    <div class="t-content">
+                        <h4>京都：MIMARU 京都車站</h4>
+                        <p>交通：京都站八條口步行 3 分。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SECTION: LOGISTICS ==================== -->
+        <div id="section-logistics" style="display:none;">
+            <div class="day-content active" style="margin-top:0;">
+                <div class="day-header" style="background:#4338ca;">
+                    <h3>🚅 交通與劃位戰術手冊</h3>
+                </div>
+                <div class="p-4 border-b border-gray-100">
+                    <h4 class="text-green-700 flex items-center"><span class="text-xl mr-2">🌲</span> JR 東日本系統 (去河口湖)
+                    </h4>
+                    <p class="mb-2"><strong>適用列車：</strong> <span class="tag tag-reserve">富士回遊</span> (全車指定席)</p>
+                    <div class="step-box">
+                        <div class="step-title">步驟 1: 線上預約 (Status: 已完成)</div>
+                        <div class="step-content"><span class="text-green-700 font-bold">✅
+                                已完成線上劃位。</span><br>您已經透過購票平台確認了座位。</div>
+                    </div>
+                    <div class="step-box">
+                        <div class="step-title">步驟 2: 領取實體票 (Exchange Only)</div>
+                        <div class="step-content">
+                            <strong>地點：</strong> 成田機場、新宿站等 JR 東日本車站的「綠色售票機」。<br>
+                            <strong>動作：</strong> 掃描 QR Code 或輸入訂單編號，<strong>領取實體指定席車票</strong>。<br>
+                            <span class="text-red-600 font-bold">注意：無需再操作「劃位」步驟，直接領票即可。票面上會有車廂與座號。</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 border-b border-gray-100">
+                    <h4 class="text-blue-700 flex items-center"><span class="text-xl mr-2">🚅</span> 東海道新幹線 (去京都)</h4>
+                    <p class="mb-2"><strong>適用列車：</strong> <span class="tag tag-reserve">Nozomi / Hikari</span> (Day 4)
+                    </p>
+                    <div class="step-box">
+                        <div class="step-title">✅ 狀態：已預約 19:40 班次</div>
+                        <div class="step-content">記得確認是否已劃位「特大行李席」。</div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h4 class="text-indigo-700 flex items-center"><span class="text-xl mr-2">⛩️</span> JR 西日本系統 (關西周遊券)
+                    </h4>
+                    <p class="mb-2"><strong>適用列車：</strong> <span class="tag tag-reserve">Kinosaki</span>, <span
+                            class="tag tag-reserve">Hashidate</span>, <span class="tag tag-reserve">Haruka</span></p>
+                    <div class="step-box">
+                        <div class="step-title">步驟 1: 領取周遊券 (Day 4 晚上)</div>
+                        <div class="step-content">在京都站綠色售票機，掃描 Klook 憑證 + 護照。</div>
+                    </div>
+                    <div class="step-box">
+                        <div class="step-title">步驟 2: 機器劃位 (免費無限次)</div>
+                        <div class="step-content">拿到周遊券磁卡後，<strong>直接將磁卡插入綠色售票機</strong>劃位。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    <script>
+        function switchMainTab(sectionId) {
+            document.getElementById('section-daily').style.display = 'none';
+            document.getElementById('section-booking').style.display = 'none';
+            document.getElementById('section-hotels').style.display = 'none';
+            document.getElementById('section-logistics').style.display = 'none';
+            document.getElementById('section-packing').style.display = 'none';
+            document.getElementById('section-weather').style.display = 'none';
+
+            document.getElementById('section-' + sectionId).style.display = 'block';
+
+            document.querySelectorAll('.main-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('tab-' + sectionId).classList.add('active');
+
+            document.getElementById('day-tabs-nav').style.display = (sectionId === 'daily') ? 'flex' : 'none';
+            if (sectionId === 'daily') switchDay('day1');
+        }
+
+        function switchDay(dayId) {
+            document.querySelectorAll('.day-content').forEach(el => {
+                if (el.parentElement.id === 'section-daily') el.classList.remove('active');
+            });
+            document.getElementById(dayId).classList.add('active');
+            document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + dayId).classList.add('active');
+        }
+
+        function togglePlan(day, plan) {
+            // Hide all potential sub-plans first
+            const allPlans = ['A', 'B'];
+            allPlans.forEach(p => {
+                const el = document.getElementById(`${day}-plan-${p}`);
+                if (el) el.classList.add('hidden-plan');
+                const btn = document.getElementById(`btn-${day}-${p}`);
+                if (btn) btn.classList.remove('active');
+            });
+
+            // Show selected plan
+            const targetPlan = document.getElementById(`${day}-plan-${plan}`);
+            if (targetPlan) targetPlan.classList.remove('hidden-plan');
+            const targetBtn = document.getElementById(`btn-${day}-${plan}`);
+            if (targetBtn) targetBtn.classList.add('active');
+
+            // --- STRICT LINKING LOGIC ---
+
+            // Link D3 -> D4
+            if (day === 'day3') {
+                document.getElementById('day4-plan-RELAX').classList.add('hidden-plan');
+                document.getElementById('day4-plan-STD').classList.add('hidden-plan');
+                document.getElementById('btn-day4-RELAX').classList.remove('active');
+                document.getElementById('btn-day4-STD').classList.remove('active');
+
+                if (plan === 'A') {
+                    // D3-A (Sunny/Full) -> D4 Relax (Shopping)
+                    document.getElementById('day4-plan-RELAX').classList.remove('hidden-plan');
+                    document.getElementById('btn-day4-RELAX').classList.add('active');
+                } else {
+                    // D3-B (Cloudy/Standard) -> D4 Standard (Makeup Chureito)
+                    document.getElementById('day4-plan-STD').classList.remove('hidden-plan');
+                    document.getElementById('btn-day4-STD').classList.add('active');
+                }
+            }
+
+            // Link D5 -> D6
+            if (day === 'day5') {
+                document.getElementById('day6-plan-A').classList.add('hidden-plan');
+                document.getElementById('day6-plan-B').classList.add('hidden-plan');
+                document.getElementById('btn-day6-A').classList.remove('active');
+                document.getElementById('btn-day6-B').classList.remove('active');
+
+                if (plan === 'A') {
+                    // D5-A (Ine) -> D6-A (Classic Kyoto)
+                    document.getElementById('day6-plan-A').classList.remove('hidden-plan');
+                    document.getElementById('btn-day6-A').classList.add('active');
+                } else {
+                    // D5-B (Flash Return/Arashiyama) -> D6-B (Okayama)
+                    document.getElementById('day6-plan-B').classList.remove('hidden-plan');
+                    document.getElementById('btn-day6-B').classList.add('active');
+                }
+            }
+        }
+
+        // --- CHECKLIST LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                const savedState = localStorage.getItem(cb.id);
+                if (savedState === 'true') {
+                    cb.checked = true;
+                    const label = cb.closest('.checklist-item');
+                    if (label) label.classList.add('checked');
+                } else if (savedState === 'false') {
+                    cb.checked = false;
+                    const label = cb.closest('.checklist-item');
+                    if (label) label.classList.remove('checked');
+                }
+            });
+
+            // Initialize Default States
+            togglePlan('day3', 'A'); // Default D3-A triggers D4-RELAX
+            togglePlan('day5', 'A'); // Default D5-A triggers D6-A
+        });
+
+        function toggleCheck(element, idOverride) {
+            let checkbox;
+            if (element.tagName === 'INPUT') {
+                checkbox = element;
+            } else {
+                checkbox = element.querySelector('input[type="checkbox"]');
+                if (event.target !== checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                }
+            }
+
+            const isChecked = checkbox.checked;
+            const itemId = idOverride || checkbox.id;
+
+            const label = checkbox.closest('.checklist-item');
+            if (label) {
+                if (isChecked) label.classList.add('checked');
+                else label.classList.remove('checked');
+            }
+
+            if (itemId) {
+                localStorage.setItem(itemId, isChecked);
+            }
+        }
+
+        switchMainTab('daily');
+    </script>
+
+</body>
+
+</html>
