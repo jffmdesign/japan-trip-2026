@@ -1914,42 +1914,92 @@
                     </label>
                 </div>
                 <div class="p-4 border-b border-gray-100">
-                    <h4 class="text-green-700 mb-3">🆗 已完成預定 (Done)</h4>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'done_flight')"><input type="checkbox"
-                            id="done_flight" checked>
-                        <div class="item-content w-full ml-2"><strong>機票</strong></div>
+                    <h4 class="text-green-700 mb-3">🚅 交通劃位清單 (JR Pass / 特急)</h4>
+                    <div class="p-3 bg-blue-50 rounded mb-4 text-sm text-blue-800">
+                        <strong>💡 劃位小撇步：</strong><br>
+                        1. <strong>JR 東日本 (D3/4)</strong>：已線上預約，去綠色機台「領票」即可。<br>
+                        2. <strong>JR 西日本 (D4/5/6/9)</strong>：到京都後，找綠色機台「憑 Pass 劃位」，免費且無限次。
+                    </div>
+
+                    <!-- D1/D3/D4: East Japan -->
+                    <h5 class="font-bold text-gray-700 mt-2 mb-1">東京廣域 (已預約 -> 領票)</h5>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_fuji_out')"><input type="checkbox"
+                            id="res_fuji_out">
+                        <div class="item-content w-full ml-2">
+                            <strong>D3 富士回遊 3號</strong> <span class="text-xs text-gray-500">新宿 07:30 -> 河口湖</span>
+                        </div>
                     </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'done_skyliner')"><input type="checkbox"
-                            id="done_skyliner" checked>
-                        <div class="item-content w-full ml-2"><strong>Skyliner 車票</strong></div>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_fuji_in')"><input type="checkbox"
+                            id="res_fuji_in">
+                        <div class="item-content w-full ml-2">
+                            <strong>D4 富士回遊 36號</strong> <span class="text-xs text-gray-500">富士山 15:08 -> 新宿</span>
+                        </div>
                     </label>
+
+                    <!-- D4: Shinkansen -->
+                    <h5 class="font-bold text-gray-700 mt-4 mb-1">移動日 (需自費/劃位)</h5>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_tokyo_kyoto')"><input type="checkbox"
+                            id="res_tokyo_kyoto">
+                        <div class="item-content w-full ml-2">
+                            <span class="tag tag-alert" style="padding:1px 4px; font-size:10px;">重要</span>
+                            <strong>D4 新幹線 Nozomi</strong> <span class="text-xs text-gray-500">品川 19:40 -> 京都</span>
+                            <div class="text-xs text-red-600 mt-1">⚠️ 記得預約「特大行李席」!</div>
+                        </div>
+                    </label>
+
+                    <!-- D5/D6/D9: West Japan -->
+                    <h5 class="font-bold text-gray-700 mt-4 mb-1">關西廣域 (Pass 免費劃位)</h5>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d5_akamatsu')"><input type="checkbox"
+                            id="res_d5_akamatsu">
+                        <div class="item-content w-full ml-2">
+                            <strong>D5 丹後赤松號</strong> <span class="text-xs text-gray-500">西舞鶴 10:29 -> 天橋立
+                                (需預約整理券)</span>
+                        </div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d5_hashidate')"><input type="checkbox"
+                            id="res_d5_hashidate">
+                        <div class="item-content w-full ml-2">
+                            <strong>D5 特急 Hashidate</strong> <span class="text-xs text-gray-500">天橋立 -> 京都 (回程)</span>
+                        </div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d6_himeji')"><input type="checkbox"
+                            id="res_d6_himeji">
+                        <div class="item-content w-full ml-2">
+                            <strong>D6 新幹線 (去程)</strong> <span class="text-xs text-gray-500">新大阪 08:00 -> 姬路</span>
+                        </div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d6_okayama')"><input type="checkbox"
+                            id="res_d6_okayama">
+                        <div class="item-content w-full ml-2">
+                            <strong>D6 新幹線 (中繼)</strong> <span class="text-xs text-gray-500">姬路 11:30 -> 岡山</span>
+                        </div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d6_return')"><input type="checkbox"
+                            id="res_d6_return">
+                        <div class="item-content w-full ml-2">
+                            <strong>D6 新幹線 (回程)</strong> <span class="text-xs text-gray-500">岡山 20:10 -> 新大阪</span>
+                        </div>
+                    </label>
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d9_haruka')"><input type="checkbox"
+                            id="res_d9_haruka">
+                        <div class="item-content w-full ml-2">
+                            <strong>D9 特急 Haruka</strong> <span class="text-xs text-gray-500">新大阪 -> 關西機場 (Hello
+                                Kitty)</span>
+                        </div>
+                    </label>
+
+                    <h4 class="text-green-700 mb-3 mt-6">🎟️ 門票/體驗 (已預約確認)</h4>
                     <label class="checklist-item" onclick="toggleCheck(this, 'done_shibuya')"><input type="checkbox"
                             id="done_shibuya" checked>
-                        <div class="item-content w-full ml-2"><strong>SHIBUYA SKY</strong></div>
+                        <div class="item-content w-full ml-2"><strong>D1 Shibuya Sky</strong> (11:40)</div>
                     </label>
                     <label class="checklist-item" onclick="toggleCheck(this, 'done_teamlab')"><input type="checkbox"
                             id="done_teamlab" checked>
-                        <div class="item-content w-full ml-2"><strong>TeamLab</strong></div>
+                        <div class="item-content w-full ml-2"><strong>D1 TeamLab Borderless</strong> (16:00)</div>
                     </label>
                     <label class="checklist-item" onclick="toggleCheck(this, 'done_roppongi')"><input type="checkbox"
                             id="done_roppongi" checked>
-                        <div class="item-content w-full ml-2"><strong>六本木觀景台</strong></div>
-                    </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'done_shinkansen')"><input type="checkbox"
-                            id="done_shinkansen" checked>
-                        <div class="item-content w-full ml-2"><strong>新幹線車票</strong></div>
-                    </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'done_jrpass')"><input type="checkbox"
-                            id="done_jrpass" checked>
-                        <div class="item-content w-full ml-2"><strong>JR 關西廣域周遊券</strong></div>
-                    </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'done_akamatsu')"><input type="checkbox"
-                            id="done_akamatsu" checked>
-                        <div class="item-content w-full ml-2"><strong>觀光列車 (赤松號)</strong></div>
-                    </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'done_fuji')"><input type="checkbox"
-                            id="done_fuji" checked>
-                        <div class="item-content w-full ml-2"><strong>JR 富士回遊</strong></div>
+                        <div class="item-content w-full ml-2"><strong>D1 六本木觀景台</strong> (19:30)</div>
                     </label>
                 </div>
             </div>
