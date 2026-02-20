@@ -662,15 +662,12 @@
         <!-- Level 1 Tabs -->
         <nav class="main-tabs">
             <button onclick="switchMainTab('daily')" id="tab-daily" class="main-tab-btn active">📅 每日行程 (Full)</button>
-            <button onclick="switchMainTab('weather')" id="tab-weather" class="main-tab-btn text-sky-600">🌤️
-                氣象戰情</button>
+            <button onclick="switchMainTab('weather')" id="tab-weather" class="main-tab-btn text-sky-600">🌤️ 氣象戰情</button>
             <button onclick="switchMainTab('hotels')" id="tab-hotels" class="main-tab-btn">🏨 住宿</button>
-            <button onclick="switchMainTab('logistics')" id="tab-logistics" class="main-tab-btn text-indigo-700">🚅
-                劃位</button>
+            <button onclick="switchMainTab('logistics')" id="tab-logistics" class="main-tab-btn text-indigo-700">🚅 劃位</button>
             <button onclick="switchMainTab('booking')" id="tab-booking" class="main-tab-btn text-red-600">✅ 待辦</button>
             <button onclick="switchMainTab('guide')" id="tab-guide" class="main-tab-btn text-green-700">🎓 指南</button>
-            <button onclick="switchMainTab('packing')" id="tab-packing" class="main-tab-btn text-amber-600">🧳
-                行李</button>
+            <button onclick="switchMainTab('packing')" id="tab-packing" class="main-tab-btn text-amber-600">🧳 行李</button>
         </nav>
         <!-- Level 2 Tabs: Days (Only for Daily Tab) -->
         <nav id="day-tabs-nav" class="day-tabs-container">
@@ -693,8 +690,7 @@
             <!-- DAY 1 -->
             <div id="day1" class="day-content">
                 <div class="day-header">
-                    <h3>Day 1 (2/21 六): 澀谷天空 & 麻布台 & 六本木點燈</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿:
-                        Home'n Lounge</span>
+                    <h3>Day 1 (2/21 六): 澀谷天空 & 麻布台 & 六本木點燈</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿: Home'n Lounge</span>
                 </div>
                 <div class="t-row safe" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
                     <div class="t-time" style="color:#15803d;">安全<br>確認</div>
@@ -710,18 +706,20 @@
                         <p class="sub-text text-gray-500">預計出關時間：07:20 - 07:40 (約 45-60 分鐘)</p>
                     </div>
                 </div>
+                
+                <!-- 修改區塊：機場換票的優先級與撤退機制 -->
                 <div class="t-row alert" style="background-color:#fee2e2;">
                     <div class="t-time" style="color:#b91c1c;">07:40<br>|<br>08:10</div>
-                    <div class="t-content"><span class="tag tag-reserve">⚠️ 機場換票</span>
-                        <h4 style="color:#b91c1c;">雙重任務 (關鍵時刻)</h4>
+                    <div class="t-content"><span class="tag tag-reserve">⚠️ 機場換票 (動態調整)</span>
+                        <h4 style="color:#b91c1c;">首要任務：確保搭上 Skyliner</h4>
                         <ul class="spot-list" style="margin-top:4px;">
-                            <li><strong>07:35 入境：</strong> 預計抵達入境大廳。</li>
-                            <li><strong>07:40 藍色櫃台：</strong> 排隊兌換 Skyliner 車票 (領取 08:12 班次)。</li>
-                            <li><strong>07:55 綠色櫃台：</strong> 排隊領取 JR 富士回遊車票 (僅領票)。</li>
+                            <li><strong>07:40 藍色櫃台 (必解)：</strong> 優先兌換 Skyliner 車票 (目標 08:12 班次)。</li>
+                            <li><strong>07:55 綠色櫃台 (次要)：</strong> 排隊領取 JR 富士回遊車票。<strong>🔴 戰術撤退：若排隊人潮目測超過 15 分鐘，果斷放棄！</strong>進市區再找機台領即可。</li>
                             <li><strong>08:05 移動：</strong> 前往 B1 京成電鐵月台 (預留 7 分鐘)。</li>
                         </ul>
                     </div>
                 </div>
+                
                 <div class="t-row move">
                     <div class="t-time">08:12<br>|<br>09:00</div>
                     <div class="t-content"><span class="tag tag-private">Skyliner</span>
@@ -899,20 +897,22 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- 修改區塊：在 D1 結尾加入市區補領票防呆提醒 -->
                 <div class="t-row move" style="background-color: #fdf2f8; border-left: 4px solid #be185d;">
                     <div class="t-time" style="color:#be185d;">21:00<br>|<br>21:20</div>
                     <div class="t-content"><span class="tag tag-toei"
                             style="background:#be185d; color:white;">大江戶線</span>
                         <h4>六本木 -> 東新宿 (直達)</h4>
                         <p>E23 -> E02，不轉車。步行回飯店 (3分鐘)。</p>
+                        <p class="text-xs text-red-600 mt-2"><strong>⚠️ 防呆備忘：</strong> 若早上在成田機場「放棄領取」富士回遊車票，請務必確認今日在澀谷/新宿等 JR 車站的綠色機台已完成領票！</p>
                     </div>
                 </div>
             </div>
             <!-- DAY 2 -->
             <div id="day2" class="day-content">
                 <div class="day-header">
-                    <h3>Day 2 (2/22 日): 淺草 & 銀座 & 日本橋</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿: Home'n
-                        Lounge</span>
+                    <h3>Day 2 (2/22 日): 淺草 & 銀座 & 日本橋</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿: Home'n Lounge</span>
                 </div>
                 <div class="t-row safe" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
                     <div class="t-time" style="color:#15803d;">戰術<br>紅利</div>
@@ -1053,8 +1053,7 @@
             <!-- D3 (Two Strict Plans) -->
             <div id="day3" class="day-content">
                 <div class="day-header" style="background:#4338ca;">
-                    <h3>Day 3 (2/23 一): 河口湖 (雙方案決策)</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿:
-                        HAOSTAY</span>
+                    <h3>Day 3 (2/23 一): 河口湖 (雙方案決策)</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿: HAOSTAY</span>
                 </div>
                 <div class="t-row safe" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
                     <div class="t-time" style="color:#15803d;">天氣<br>判斷</div>
@@ -1076,10 +1075,8 @@
                     </div>
                 </div>
                 <div class="toggle-box">
-                    <div onclick="togglePlan('day3', 'A')" id="btn-day3-A" class="toggle-btn plan-a active">☀️ 方案
-                        A：晴天攻頂<br><span class="text-xs font-normal text-gray-500">(D4 將安排購物)</span></div>
-                    <div onclick="togglePlan('day3', 'B')" id="btn-day3-B" class="toggle-btn plan-b">☁️ 方案
-                        B：輕鬆漫遊<br><span class="text-xs font-normal text-gray-500">(D4 將安排補考)</span></div>
+                    <div onclick="togglePlan('day3', 'A')" id="btn-day3-A" class="toggle-btn plan-a active">☀️ 方案 A：晴天攻頂<br><span class="text-xs font-normal text-gray-500">(D4 將安排購物)</span></div>
+                    <div onclick="togglePlan('day3', 'B')" id="btn-day3-B" class="toggle-btn plan-b">☁️ 方案 B：輕鬆漫遊<br><span class="text-xs font-normal text-gray-500">(D4 將安排補考)</span></div>
                 </div>
                 <!-- Plan A -->
                 <div id="day3-plan-A">
@@ -1191,8 +1188,7 @@
             <!-- D4 -->
             <div id="day4" class="day-content">
                 <div class="day-header" style="background:#ef4444;">
-                    <h3>Day 4 (2/24 二): 富士回遊 & 移動 (連動執行)</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿:
-                        MIMARU 京都</span>
+                    <h3>Day 4 (2/24 二): 富士回遊 & 移動 (連動執行)</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿: MIMARU 京都</span>
                 </div>
                 <div class="toggle-box">
                     <div id="btn-day4-RELAX" class="toggle-btn locked active">🛍️ 方案 A 續章：悠閒購物<br><span
@@ -1308,12 +1304,9 @@
                         <p><strong>絕對不能忘！明天早上就要用！</strong></p>
                         <ol class="text-sm text-red-800 list-decimal pl-4 mt-1">
                             <li><strong>領取 Pass：</strong> 掃描 QR Code + 護照 (每個人都要)。</li>
-                            <li><strong>劃位 (D5 丹後赤松)：</strong> 雖然已預約整理券，但若要搭這班車的「運賃部分」可用 Pass 抵扣 (雖然是私鐵，但 KWAP
-                                有包丹後鐵道)，或直接買單程票。
-                                <br><em>修正：</em> 丹後赤松號是「丹後鐵道」，KWAP 有包含「丹後鐵道全線」，所以只需出示 Pass 與整理券即可，<strong>不用劃 JR
-                                    指定席位</strong>。
-                            </li>
-                            <li><strong>劃位 (D5 回程 Hashidate / D6 新幹線)：</strong> 這時候把後面幾天的指定席一次劃好！</li>
+                            <li><strong>劃位 (D5 丹後赤松)：</strong> 丹後赤松號是「丹後鐵道」，KWAP 有包含「丹後鐵道全線」，只需出示 Pass 與整理券即可，<strong>不用劃 JR 指定席位</strong>。</li>
+                            <li><strong>劃位 (D5 往返天橋立)：</strong> <strong>⚠️ 極度重要：</strong> 往返的特急 Maizuru 與 Hashidate 皆為<strong>「全車指定席」 (無自由座)</strong>，請務必在此刻用 Pass 將座位劃好！</li>
+                            <li><strong>劃位 (D6 新幹線)：</strong> 順便把 D6 往返岡山的指定席一次劃起來。</li>
                         </ol>
                     </div>
                 </div>
@@ -1342,39 +1335,58 @@
                 <!-- Plan A: Ine -->
                 <div id="day5-plan-A">
                     <div class="t-row move">
-                        <div class="t-time">08:15<br>|<br>08:38</div>
+                        <div class="t-time">07:10<br>|<br>07:32</div>
                         <div class="t-content"><span class="tag tag-walk">步行</span>
-                            <h4>MIMARU -> 京都站 (31號月台)</h4>
+                            <h4>MIMARU -> 京都站 (30號月台)</h4>
                             <ul class="spot-list" style="margin-top:4px;">
-                                <li><strong>08:15 出發：</strong> 離開飯店。</li>
-                                <li><strong>08:30 抵達月台：</strong> 31號月台 (山陰線最遠端，需走 10-15 min)。</li>
-                                <li><strong>08:38 發車：</strong> 特急 Maizuru 1。</li>
+                                <li><strong>06:40 起床：</strong> 提早作業，換取完美轉乘餘裕。</li>
+                                <li><strong>07:10 出發：</strong> 離開飯店前往車站 (步行約 6-8 分)。</li>
+                                <li><strong>07:32 發車：</strong> 特急 Hashidate 1 (橋立 1號)。</li>
                             </ul>
                         </div>
                     </div>
                     <div class="t-row move" style="background-color: #fdf2f8; border-left: 4px solid #be185d;">
-                        <div class="t-time" style="color:#be185d;">08:38<br>|<br>10:04</div>
-                        <div class="t-content"><span class="tag tag-reserve">JR 特急</span>
-                            <h4>特急 Maizuru 1 (まいづる) -> 西舞鶴</h4>
-                            <p><strong>直達車：</strong> 舒適搭乘 1.5 小時。車上可補眠。</p>
+                        <div class="t-time" style="color:#be185d;">07:32<br>|<br>08:38</div>
+                        <div class="t-content"><span class="tag tag-reserve" style="background:#b91c1c; border-color:#7f1d1d;">全車指定席</span>
+                            <h4>特急 Hashidate 1 -> 綾部 (Ayabe)</h4>
+                            <p>舒適搭乘約 1 小時 6 分。<strong class="text-red-600">⚠️ 戰術提醒：此段為「特急」，D4 晚上仍務必去機器劃位！</strong>請在「綾部站」下車，準備轉乘。</p>
                         </div>
                     </div>
                     <div class="t-row move">
-                        <div class="t-time">10:04<br>|<br>10:29</div>
-                        <div class="t-content">
-                            <h4>西舞鶴站 (轉乘緩衝)</h4>
-                            <ul class="spot-list" style="margin-top:4px;">
-                                <li><strong>10:04 抵達：</strong> JR 月台。</li>
-                                <li><strong>10:15 換月台：</strong> 步行至丹後鐵道檢票口 (人工通道示意外國人 Pass)。</li>
-                                <li><strong>10:29 發車：</strong> 丹後赤松號。</li>
-                            </ul>
+                        <div class="t-time">08:51<br>|<br>09:13</div>
+                        <div class="t-content"><span class="tag tag-jr">JR 舞鶴線</span>
+                            <h4>綾部 -> 西舞鶴 (普通車)</h4>
+                            <p>在綾部站有 13 分鐘換月台，搭乘往「東舞鶴」方向之普通車。<span class="text-green-700 font-bold ml-1">(此段免劃位，憑 Pass 直接上車)</span></p>
+                            
+                            <!-- 新增：終極滿席備案模組 -->
+                            <div class="mt-3 p-3 bg-red-50 border border-red-200 rounded text-sm shadow-sm">
+                                <strong class="text-red-800 flex items-center mb-2"><span class="text-lg mr-1">🆘</span> 終極防線：若兩班特急「全部客滿」</strong>
+                                <p class="text-gray-700 mb-2">若 D4 晚間發現 07:32 與 08:38 特急皆無座位，絕對死不了！請啟動以下絕境對策 (擇一)：</p>
+                                <ul class="list-disc pl-5 text-red-900 font-medium space-y-2">
+                                    <li><strong>🛡️ 體力流 (提早接力)：</strong><br>
+                                        <strong>07:06 京都搭「快速」</strong> ➔ 07:46 園部轉「普通」 ➔ 09:02 綾部轉「普通」 ➔ <strong>09:30 抵達西舞鶴</strong>。<br>
+                                        <span class="text-xs text-gray-600">※ 絕對有車搭，免劃位。代價是需清晨 06:30 出門。</span>
+                                    </li>
+                                    <li><strong>🔥 恥力流 (硬闖特急)：</strong><br>
+                                        維持 07:32 或 08:38 發車。<strong>不劃位，憑 JR Pass 直接上車。</strong><br>
+                                        <span class="text-xs text-gray-600">※ 合法規則：持 Pass 可在滿席時「站立於車廂連通道 (Deck)」。代價是家人需罰站 1~1.5 小時。</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="t-row safe" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
+                        <div class="t-time" style="color:#15803d;">09:13<br>|<br>10:13</div>
+                        <div class="t-content"><span class="tag tag-safe">餘裕 1 小時</span>
+                            <h4 style="color:#15803d;">西舞鶴站：無壓轉乘與補給</h4>
+                            <p>提早抵達換取完美從容。家人可先上廁所、拍火車，並前往丹後鐵道人工閘口，出示 JR Pass 與 10:13 的整理券畫面進站。</p>
                         </div>
                     </div>
                     <div class="t-row activity" style="background-color: #fffbeb; border-left: 4px solid #f59e0b;">
-                        <div class="t-time" style="color:#b45309;">10:29<br>|<br>11:47</div>
-                        <div class="t-content"><span class="tag tag-reserve">觀光列車</span>
-                            <h4 style="color:#b45309;">丹後赤松號 (Akamatsu)</h4>
-                            <p><strong>需預約整理券：</strong> 享受海景咖啡時光。<br>行駛路線：西舞鶴 -> 天橋立。</p>
+                        <div class="t-time" style="color:#b45309;">10:13<br>|<br>11:01</div>
+                        <div class="t-content"><span class="tag tag-reserve" style="background:#16a34a; border-color:#15803d;">已預約 1號車</span>
+                            <h4 style="color:#b45309;">丹後赤松號 (Akamatsu) 8771D</h4>
+                            <p><strong>憑證確認：</strong> 代表者 Sung Yuchieh (共 4 人)。享受海景咖啡時光。<br>行駛路線：西舞鶴 (10:13) -> 天橋立 (11:01)。</p>
                             <div class="spot-info-box">
                                 <div class="spot-info-title">📸 絕景預告</div>
                                 <ul class="spot-list">
@@ -1384,10 +1396,10 @@
                         </div>
                     </div>
                     <div class="t-row meal">
-                        <div class="t-time">11:50<br>|<br>12:50</div>
+                        <div class="t-time">11:05<br>|<br>12:40</div>
                         <div class="t-content">
                             <h4>午餐：天橋立站周邊</h4>
-                            <p><strong>智恩寺前商店街：</strong> 吃個蛤蠣丼或海鮮丼。</p>
+                            <p><strong>智恩寺前商店街：</strong> 吃個蛤蠣丼或海鮮丼。時間非常充裕。</p>
                         </div>
                     </div>
                     <div class="t-row move">
@@ -1417,12 +1429,13 @@
                     </div>
                     <div class="t-row move">
                         <div class="t-time">16:55<br>|<br>18:00</div>
-                        <div class="t-content"><span class="tag tag-reserve">JR 特急</span>
+                        <div class="t-content"><span class="tag tag-reserve" style="background:#b91c1c; border-color:#7f1d1d;">全車指定席</span>
                             <h4>Hashidate / 丹後之海 -> 京都</h4>
                             <ul class="spot-list" style="margin-top:4px;">
                                 <li><strong>16:55 發車：</strong> Hashidate 8號 (天橋立發)。</li>
                                 <li><strong>18:00 發車：</strong> Hashidate 10號 (備案)。</li>
                             </ul>
+                            <p class="text-xs text-gray-500 mt-1">※ 同樣為全車指定席，需提前劃位。</p>
                         </div>
                     </div>
                 </div>
@@ -1430,64 +1443,175 @@
                 <!-- Plan B: Arashiyama (Early Return) -->
                 <div id="day5-plan-B" class="hidden-plan">
                     <div class="t-row move">
-                        <div class="t-time">08:15<br>|<br>08:38</div>
+                        <div class="t-time">07:10<br>|<br>07:32</div>
                         <div class="t-content"><span class="tag tag-walk">步行</span>
-                            <h4>MIMARU -> 京都站 (31號月台)</h4>
+                            <h4>MIMARU -> 京都站 (30號月台)</h4>
                             <ul class="spot-list" style="margin-top:4px;">
-                                <li><strong>08:15 出發：</strong> 離開飯店。</li>
-                                <li><strong>08:30 抵達月台：</strong> 31號月台。</li>
-                                <li><strong>08:38 發車：</strong> 特急 Maizuru 1。</li>
+                                <li><strong>06:40 起床：</strong> 提早作業，換取完美轉乘餘裕。</li>
+                                <li><strong>07:10 出發：</strong> 離開飯店前往車站 (步行約 6-8 分)。</li>
+                                <li><strong>07:32 發車：</strong> 特急 Hashidate 1 (橋立 1號)。</li>
                             </ul>
                         </div>
                     </div>
                     <div class="t-row move" style="background-color: #fdf2f8; border-left: 4px solid #be185d;">
-                        <div class="t-time" style="color:#be185d;">08:38<br>|<br>10:04</div>
-                        <div class="t-content"><span class="tag tag-reserve">JR 特急</span>
-                            <h4>特急 Maizuru 1 (まいづる) -> 西舞鶴</h4>
-                            <p><strong>直達車：</strong> 舒適搭乘 1.5 小時。車上可補眠。</p>
+                        <div class="t-time" style="color:#be185d;">07:32<br>|<br>08:38</div>
+                        <div class="t-content"><span class="tag tag-reserve" style="background:#b91c1c; border-color:#7f1d1d;">全車指定席</span>
+                            <h4>特急 Hashidate 1 -> 綾部 (Ayabe)</h4>
+                            <p>舒適搭乘約 1 小時 6 分。<strong class="text-red-600">⚠️ 戰術提醒：此段為「特急」，D4 晚上仍務必去機器劃位！</strong>請在「綾部站」下車，準備轉乘。</p>
                         </div>
                     </div>
                     <div class="t-row move">
-                        <div class="t-time">10:04<br>|<br>10:29</div>
-                        <div class="t-content">
-                            <h4>西舞鶴站 (轉乘緩衝)</h4>
-                            <p><strong>25分鐘空檔：</strong> 上廁所、拍火車。出示 JR Pass 人工通道進出。</p>
+                        <div class="t-time">08:51<br>|<br>09:13</div>
+                        <div class="t-content"><span class="tag tag-jr">JR 舞鶴線</span>
+                            <h4>綾部 -> 西舞鶴 (普通車)</h4>
+                            <p>在綾部站有 13 分鐘換月台，搭乘往「東舞鶴」方向之普通車。<span class="text-green-700 font-bold ml-1">(此段免劃位，憑 Pass 直接上車)</span></p>
+                            
+                            <!-- 新增：終極滿席備案模組 (同步更新) -->
+                            <div class="mt-3 p-3 bg-red-50 border border-red-200 rounded text-sm shadow-sm">
+                                <strong class="text-red-800 flex items-center mb-2"><span class="text-lg mr-1">🆘</span> 終極防線：若兩班特急「全部客滿」</strong>
+                                <p class="text-gray-700 mb-2">若 D4 晚間發現 07:32 與 08:38 特急皆無座位，絕對死不了！請啟動以下絕境對策 (擇一)：</p>
+                                <ul class="list-disc pl-5 text-red-900 font-medium space-y-2">
+                                    <li><strong>🛡️ 體力流 (提早接力)：</strong><br>
+                                        <strong>07:06 京都搭「快速」</strong> ➔ 07:46 園部轉「普通」 ➔ 09:02 綾部轉「普通」 ➔ <strong>09:30 抵達西舞鶴</strong>。<br>
+                                        <span class="text-xs text-gray-600">※ 絕對有車搭，免劃位。代價是需清晨 06:30 出門。</span>
+                                    </li>
+                                    <li><strong>🔥 恥力流 (硬闖特急)：</strong><br>
+                                        維持 07:32 或 08:38 發車。<strong>不劃位，憑 JR Pass 直接上車。</strong><br>
+                                        <span class="text-xs text-gray-600">※ 合法規則：持 Pass 可在滿席時「站立於車廂連通道 (Deck)」。代價是家人需罰站 1~1.5 小時。</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="t-row safe" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
+                        <div class="t-time" style="color:#15803d;">09:13<br>|<br>10:13</div>
+                        <div class="t-content"><span class="tag tag-safe">餘裕 1 小時</span>
+                            <h4 style="color:#15803d;">西舞鶴站：無壓轉乘與補給</h4>
+                            <p>提早抵達換取完美從容。可上廁所、拍火車，並前往丹後鐵道人工閘口進站。</p>
                         </div>
                     </div>
                     <div class="t-row activity" style="background-color: #fffbeb; border-left: 4px solid #f59e0b;">
-                        <div class="t-time" style="color:#b45309;">10:29<br>|<br>11:47</div>
-                        <div class="t-content"><span class="tag tag-reserve">觀光列車</span>
-                            <h4 style="color:#b45309;">丹後赤松號 (Akamatsu)</h4>
-                            <p><strong>需預約整理券：</strong> 即使雨天，紅色列車與海景依然美麗。</p>
+                        <div class="t-time" style="color:#b45309;">10:13<br>|<br>11:01</div>
+                        <div class="t-content"><span class="tag tag-reserve" style="background:#16a34a; border-color:#15803d;">已預約 1號車</span>
+                            <h4 style="color:#b45309;">丹後赤松號 (Akamatsu) 8771D</h4>
+                            <p><strong>憑證確認：</strong> 即使雨天，紅色列車與海景依然美麗。行駛路線：西舞鶴 (10:13) -> 天橋立 (11:01)。</p>
                         </div>
                     </div>
-                    <div class="t-row meal">
-                        <div class="t-time">11:50<br>|<br>13:30</div>
-                        <div class="t-content">
-                            <h4>午餐：天橋立 (智恩寺周邊)</h4>
-                            <p>簡單用餐，逛逛智恩寺，放棄纜車/伊根 (天候不佳)。</p>
-                        </div>
-                    </div>
-                    <div class="t-row move" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
-                        <div class="t-time" style="color:#15803d;">13:48<br>|<br>15:52</div>
-                        <div class="t-content"><span class="tag tag-reserve">JR 特急</span>
-                            <h4>Hashidate 2號 -> 二條 (Nijo)</h4>
-                            <p><strong>戰術撤退：</strong> 提早返回京都市區。<br><strong>注意：</strong> 在「二條站」下車，轉乘去嵐山比較近。</p>
-                        </div>
-                    </div>
+
+                    <!-- 新增：填補 50 分鐘空白的緩衝與推進區塊 -->
                     <div class="t-row move">
-                        <div class="t-time">16:00<br>|<br>16:15</div>
-                        <div class="t-content"><span class="tag tag-jr">JR 嵯峨野線</span>
-                            <h4>二條 -> 嵯峨嵐山</h4>
-                            <p>只要 10 分鐘。</p>
+                        <div class="t-time">11:01<br>|<br>11:50</div>
+                        <div class="t-content"><span class="tag tag-walk">緩衝推進</span>
+                            <h4>抵達天橋立：整備與智恩寺散步</h4>
+                            <ul class="spot-list" style="margin-top:4px;">
+                                <li><strong>11:01 下車整備：</strong> 車站洗手間通常人多，耐心等候，整理裝備。</li>
+                                <li><strong>11:20 散策：</strong> 步行前往「智恩寺 (文殊堂)」與「迴旋橋」周邊走走拍照。</li>
+                                <li><strong>11:45 推進：</strong> 慢慢散步至「天橋立 View Land」纜車登山口前方。</li>
+                            </ul>
                         </div>
                     </div>
+
+                    <!-- 修正：天氣判定與明確的 13:48 撤退計畫 (導入火車便當戰術) -->
+                    <div class="t-row alert" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
+                        <div class="t-time" style="color:#15803d;">11:50<br>當地決策</div>
+                        <div class="t-content"><span class="tag tag-safe">視距內戰術切換</span>
+                            <h4 style="color:#15803d;">天橋立站前：最終天氣判定</h4>
+                            <p>抵達後觀察天空與風勢。為配合 13:48 的特急，此處停留時間約為 1.5 小時，屬於「極速特攻」節奏。</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
+                                <div class="bg-white p-2 rounded border border-green-200">
+                                    <strong class="text-green-700 text-sm">🟢 狀況許可 (無強風)</strong>
+                                    <p class="text-xs text-gray-600">直上「飛龍觀」從容拍照。午餐改為購買便當上火車吃。</p>
+                                </div>
+                                <div class="bg-white p-2 rounded border border-red-200">
+                                    <strong class="text-red-700 text-sm">🔴 狀況惡劣 (狂風暴雨)</strong>
+                                    <p class="text-xs text-gray-600">放棄登頂，躲入智恩寺旁餐廳悠閒吃飯避雨。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="t-row activity">
-                        <div class="t-time">16:30<br>|<br>19:00</div>
-                        <div class="t-content">
-                            <h4>嵐山傍晚散策</h4>
-                            <p><strong>京友禪光林 (Kimono Forest)：</strong> 嵐電車站的柱子點燈，晚上很美。<br><strong>晚餐：</strong>
-                                嵐山周邊或回京都車站吃。</p>
+                        <div class="t-time">12:00<br>|<br>13:30</div>
+                        <div class="t-content"><span class="tag tag-leg">極速特攻</span>
+                            <h4>天橋立 View Land & 食糧掃貨</h4>
+                            <p>因為將午餐移至車上，您現在擁有完整的時間享受觀景台！</p>
+                            <div class="spot-info-box">
+                                <div class="spot-info-title">📸 飛龍觀與補給指南</div>
+                                <ul class="spot-list">
+                                    <li><strong>拍照餘裕：</strong> 股見 (股のぞき) & 空中迴廊。不用趕著去餐廳排隊，可慢慢取景。</li>
+                                    <li><strong>食糧掃貨 (13:10 執行)：</strong> 下山後，立即在天橋立車站內或周邊商店購買鐵路便當 (駅弁)、飯糰或便利商店熟食。鄉下便當易售罄，看到就先買齊。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="t-row meal" style="background-color: #fdf2f8; border-left: 4px solid #be185d;">
+                        <div class="t-time" style="color:#be185d;">13:48<br>|<br>15:22</div>
+                        <div class="t-content"><span class="tag tag-reserve" style="background:#b91c1c; border-color:#7f1d1d;">全車指定席</span> <span class="tag tag-safe">移動餐廳</span>
+                            <h4 style="color:#be185d;">特急 Hashidate 2號 (火車午餐) -> 龜岡</h4>
+                            <ul class="spot-list" style="margin-top:4px;">
+                                <li><strong>13:48 發車：</strong> 天橋立站。上車後開啟餐桌，全家享用便當與窗外風景。</li>
+                                <li><strong>15:22 抵達：</strong> <strong class="text-red-600">龜岡站 (提前下車)</strong>。</li>
+                            </ul>
+                            <p class="text-xs text-red-600 mt-1"><strong>⚠️ 戰術提醒：</strong> 這裡指的是 JR 龜岡站。二月「嵯峨野小火車 (Torokko)」為冬季停駛期，無法搭乘小火車，必須轉搭 JR 嵯峨野線普通車。</p>
+                        </div>
+                    </div>
+
+                    <div class="t-row move">
+                        <div class="t-time">15:30<br>|<br>15:45</div>
+                        <div class="t-content"><span class="tag tag-jr">JR 嵯峨野線</span>
+                            <h4>龜岡 -> 嵯峨嵐山</h4>
+                            <p>在龜岡站同站轉乘 JR 嵯峨野線 (普通車或快速皆可)，約 10-15 分鐘即可抵達嵯峨嵐山站。<span class="text-green-700 font-bold ml-1">(憑 Pass 免費)</span></p>
+                        </div>
+                    </div>
+
+                    <!-- 修正：廢棄竹林，執行「過橋轉移」戰術 -->
+                    <div class="t-row activity" style="background-color: #fffbeb; border-left: 4px solid #f59e0b;">
+                        <div class="t-time" style="color:#b45309;">15:50<br>|<br>16:40</div>
+                        <div class="t-content"><span class="tag tag-safe">避雨快閃</span>
+                            <h4 style="color:#b45309;">嵐山快閃打卡：光林 & 渡月橋</h4>
+                            <p><strong>⚠️ 天氣防禦戰術：</strong> 捨棄陰冷泥濘的竹林小徑。採「單向推進」一路往南走過渡月橋。</p>
+                            <ul class="spot-list" style="margin-top:4px;">
+                                <li><strong>第一站 京友禪光林：</strong> 順路進入嵐電嵐山站，拍攝點燈的絕美和服柱 (有遮蔽物)。</li>
+                                <li><strong>第二站 渡月橋：</strong> 迎著傍晚天色跨越桂川，直奔橋對岸。</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 新增：利用阪急電鐵的完美大逃脫 -->
+                    <div class="t-row move" style="background-color: #fdf2f8; border-left: 4px solid #be185d;">
+                        <div class="t-time" style="color:#be185d;">16:45<br>|<br>17:15</div>
+                        <div class="t-content"><span class="tag tag-private" style="background:#4b5563; color:white;">阪急電鐵</span>
+                            <h4>阪急嵐山站 -> 京都河原町 (祇園)</h4>
+                            <ul class="spot-list" style="margin-top:4px;">
+                                <li><strong>過橋即達：</strong> 過了渡月橋步行 5 分鐘即達「阪急嵐山站」。<strong class="text-red-600">千萬別搭公車！</strong></li>
+                                <li><strong>路線：</strong> 搭乘阪急嵐山線至「桂 (Katsura)」站，同站換乘阪急京都線至終點「京都河原町」。</li>
+                                <li><strong>費用：</strong> 刷 Suica/ICOCA (約 240円，20 分鐘極速抵達市區)。</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 修改：河原町/祇園室內防禦網與五重塔夜拍 -->
+                    <div class="t-row meal">
+                        <div class="t-time">17:15<br>|<br>20:00</div>
+                        <div class="t-content"><span class="tag tag-safe">全天候防禦</span> <span class="tag tag-shop" style="background:#fce7f3; color:#be185d; border-color:#fbcfe8;">夜拍絕景</span>
+                            <h4>晚餐、購物與八坂之塔 (五重塔) 夜拍</h4>
+                            <p>完美降落至全京都最強的「室內防禦網」。新京極、寺町通皆有巨大遮雨棚。雨天或夜晚更推薦散步至祇園周邊拍攝五重塔。</p>
+                            <div class="spot-info-box">
+                                <div class="spot-info-title">📸 晚餐與五重塔夜拍戰術</div>
+                                <ul class="spot-list">
+                                    <li><strong>晚餐選擇：</strong> 這裡餐廳密集度極高 (燒肉、壽司、拉麵任選)，建議先吃飽補充電力。</li>
+                                    <li><strong>五重塔 (八坂之塔) 倒影：</strong> 沿著四條通往八坂神社方向散步，轉入二三年坂。<strong>🔥 雨天專屬紅利：</strong> 被雨水打濕的石板路會像鏡面一樣，完美反射出夜晚點燈的五重塔與街燈，能拍出極具京都魔幻氛圍的絕景！</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="t-row move">
+                        <div class="t-time">20:00<br>|<br>20:20</div>
+                        <div class="t-content"><span class="tag tag-metro">地下鐵</span>
+                            <h4>河原町 -> MIMARU 京都車站</h4>
+                            <p>從「四條站」搭乘地下鐵烏丸線直達「京都站」(僅 5 分鐘)，步行回飯店休息。</p>
                         </div>
                     </div>
                 </div>
@@ -1496,14 +1620,11 @@
             <!-- DAY 6 -->
             <div id="day6" class="day-content">
                 <div class="day-header" style="background:#be185d;">
-                    <h3>Day 6 (2/26 四): 姬路城 & 岡山 or 經典京都</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿:
-                        MIMARU 京都</span>
+                    <h3>Day 6 (2/26 四): 姬路城 & 岡山 or 經典京都</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿: MIMARU 京都</span>
                 </div>
                 <div class="toggle-box">
-                    <div onclick="togglePlan('day6', 'B')" id="btn-day6-B" class="toggle-btn plan-b active">🍑 方案
-                        B：岡山遠征<br><span class="text-xs font-normal text-gray-500">(JR Pass 最大化 / 主力行程)</span></div>
-                    <div onclick="togglePlan('day6', 'A')" id="btn-day6-A" class="toggle-btn plan-a">⛩️ 方案
-                        A：經典京都<br><span class="text-xs font-normal text-gray-500">(若 D5 太累或沒去清水寺)</span></div>
+                    <div id="btn-day6-A" class="toggle-btn locked">⛩️ 方案 A 續章：經典京都<br><span class="text-xs font-normal text-gray-500">(因 D5 遠征伊根體力透支，今日留守市區)</span></div>
+                    <div id="btn-day6-B" class="toggle-btn locked active">🍑 方案 B 續章：岡山遠征<br><span class="text-xs font-normal text-gray-500">(因 D5 留守京都，今日執行 JR Pass 最大化)</span></div>
                 </div>
 
                 <!-- Plan B: Okayama (Main) -->
@@ -1616,22 +1737,92 @@
                     <div class="t-row safe" style="background-color: #fff7ed; border-left: 4px solid #ea580c;">
                         <div class="t-time" style="color:#c2410c;">補課<br>行程</div>
                         <div class="t-content"><span class="tag tag-safe">經典必遊</span>
-                            <h4 style="color:#c2410c;">執行方案 A 續章：京都經典</h4>
-                            <p>若 D5 太累沒去清水寺，或想留在京都市區。</p>
+                            <h4 style="color:#c2410c;">執行方案 A 續章：京都經典 (東西大橫連)</h4>
+                            <p>因 D5 伊根遠征體力消耗大，今日取消跨縣市移動，專注於京都市區兩大王牌景點，步調放慢。</p>
                         </div>
                     </div>
-                    <div class="t-row activity">
-                        <div class="t-time">06:20</div>
-                        <div class="t-content">
-                            <h4>清水寺 & 二年坂 (早起避人潮)</h4>
-                            <p>06:00 開門。早去早回。</p>
+                    
+                    <div class="t-row move">
+                        <div class="t-time">06:30<br>|<br>06:45</div>
+                        <div class="t-content"><span class="tag tag-taxi">計程車</span>
+                            <h4>MIMARU -> 清水寺 (松原通)</h4>
+                            <p><strong>體力保留戰術：</strong> 強烈建議直接從飯店搭計程車 (約 ¥1,500-2,000)，請司機開到「清水寺 仁王門」附近的松原通下車，完美避開五條坂的超長陡坡。</p>
                         </div>
                     </div>
+
                     <div class="t-row activity">
-                        <div class="t-time">12:00</div>
-                        <div class="t-content">
-                            <h4>嵐山散策</h4>
-                            <p>竹林小徑、渡月橋。</p>
+                        <div class="t-time">06:45<br>|<br>09:30</div>
+                        <div class="t-content"><span class="tag tag-early">早鳥優勢</span>
+                            <h4>清水寺 & 二、三年坂散策</h4>
+                            <ul class="spot-list" style="margin-top:4px;">
+                                <li><strong>06:45 入寺：</strong> 清水寺 06:00 即開門，此時享有極少人潮的本堂舞台。</li>
+                                <li><strong>08:00 順行下坡：</strong> 沿著三年坂 -> 二年坂 一路輕鬆往下逛。</li>
+                                <li><strong>08:30 咖啡醒神：</strong> 二年坂星巴克 (榻榻米包廂) 或周邊茶屋休息。</li>
+                            </ul>
+                            <div class="spot-info-box">
+                                <div class="spot-info-title">📸 清水寺周邊攝影</div>
+                                <ul class="spot-list">
+                                    <li><strong>奧之院觀景台：</strong> 拍攝「清水舞台」全景與遠方京都市區同框的最佳經典機位。</li>
+                                    <li><strong>八坂之塔 (法觀寺)：</strong> 從二年坂往上拍，將五重塔與傳統町家建築一起入鏡 (早晨才拍得到無人空景)。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="t-row move">
+                        <div class="t-time">09:30<br>|<br>10:00</div>
+                        <div class="t-content"><span class="tag tag-bus">市營巴士</span>
+                            <h4>八坂神社 -> 祇園 -> 錦市場</h4>
+                            <p>步行穿過八坂神社到祇園 (四條通)，搭乘公車或直接步行 (約 15 分鐘) 至河原町/錦市場一帶。</p>
+                        </div>
+                    </div>
+
+                    <div class="t-row meal" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
+                        <div class="t-time" style="color:#15803d;">10:00<br>|<br>12:00</div>
+                        <div class="t-content"><span class="tag tag-shop">邊走邊吃</span>
+                            <h4 style="color:#15803d;">早午餐：錦市場 & 新京極通</h4>
+                            <p>「京都的廚房」。10點過後店家陸續營業，可在此購買豆乳甜甜圈、章魚鵪鶉蛋、玉子燒等小吃當作早午餐。</p>
+                            <p class="text-xs text-red-600 mt-1">⚠️ 禮節提醒：錦市場現已全面禁止「邊走邊吃 (歩き食べ)」，請在店家門口吃完再丟垃圾。</p>
+                        </div>
+                    </div>
+
+                    <div class="t-row move">
+                        <div class="t-time">12:00<br>|<br>12:45</div>
+                        <div class="t-content"><span class="tag tag-metro">地下鐵</span> <span class="tag tag-jr">JR 嵯峨野線</span>
+                            <h4>轉乘：四條/烏丸 -> 京都站 -> 嵯峨嵐山</h4>
+                            <ul class="spot-list" style="margin-top:4px;">
+                                <li><strong>12:00 地下鐵：</strong> 搭乘烏丸線「四條」->「京都」(5分鐘)。</li>
+                                <li><strong>12:15 轉 JR：</strong> 京都站內轉乘 JR 嵯峨野線 (往園部方向)。</li>
+                                <li><strong>12:35 抵達：</strong> JR 嵯峨嵐山站 (若持 JR Pass 此段免費)。</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="t-row activity" style="background-color: #fffbeb; border-left: 4px solid #f59e0b;">
+                        <div class="t-time" style="color:#b45309;">13:00<br>|<br>16:30</div>
+                        <div class="t-content"><span class="tag tag-crowd">預期擁擠</span>
+                            <h4 style="color:#b45309;">嵐山縱走散策</h4>
+                            <p>下午嵐山遊客極多，心態需調整為「悠閒漫步」，不強求快速移動。</p>
+                            <ul class="spot-list" style="margin-top:4px;">
+                                <li><strong>第一站 竹林小徑：</strong> 從野宮神社旁進入。</li>
+                                <li><strong>第二站 天龍寺：</strong> 欣賞曹源池庭園 (可只買庭園票)。</li>
+                                <li><strong>第三站 渡月橋：</strong> 沿著桂川散步，欣賞山水景緻。</li>
+                            </ul>
+                            <div class="spot-info-box">
+                                <div class="spot-info-title">📸 嵐山下午攝影破關法</div>
+                                <ul class="spot-list">
+                                    <li><strong>竹林仰角：</strong> 下午竹林全是人，請使用「超廣角鏡頭」由下往上貼近竹子拍，或拍攝陽光穿透竹葉的光影 (林漏日)。</li>
+                                    <li><strong>% ARABICA 咖啡：</strong> 拿著印有 % 的杯子，以渡月橋與桂川波光為散景拍攝 (排隊通常需 30-40 分鐘，請自行斟酌)。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="t-row move">
+                        <div class="t-time">16:45<br>|<br>17:15</div>
+                        <div class="t-content"><span class="tag tag-jr">JR 嵯峨野線</span>
+                            <h4>嵯峨嵐山 -> 京都車站</h4>
+                            <p>搭乘 JR 原線折返，15 分鐘即可回到京都車站。結束今日充實的市區大橫走。</p>
                         </div>
                     </div>
                 </div>
@@ -1642,9 +1833,7 @@
             <!-- D7 (UPDATED: Nara + Osaka Castle Night + Umeda Optional) -->
             <div id="day7" class="day-content">
                 <div class="day-header" style="background:#059669;">
-                    <h3>Day 7 (2/27 五): 宇治・奈良・大阪城夜景</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿:
-                        MIMARU
-                        京都</span>
+                    <h3>Day 7 (2/27 五): 宇治・奈良・大阪城夜景</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿: MIMARU 京都</span>
                 </div>
                 <div class="t-row safe" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
                     <div class="t-time" style="color:#15803d;">戰術<br>串聯</div>
@@ -1730,20 +1919,16 @@
                 </div>
                 <div class="t-row move" style="background-color: #fff7ed; border-left: 4px solid #c2410c;">
                     <div class="t-time" style="color:#c2410c;">16:26<br>|<br>17:15</div>
-                    <div class="t-content"><span class="tag tag-jr" style="background:#15803d; color:white;">JR
-                            大和路快速</span>
+                    <div class="t-content"><span class="tag tag-jr" style="background:#15803d; color:white;">JR 大和路快速</span>
                         <h4 style="color:#c2410c;">奈良 -> 天王寺 -> 大阪城公園</h4>
                         <p>同月台轉乘環狀線。</p>
                     </div>
                 </div>
                 <div class="t-row activity" style="background-color: #312e81; color: white;">
-                    <div class="t-time" style="color: #a5b4fc; border-right-color: #4338ca;">17:30<br>|<br>18:30
-                    </div>
-                    <div class="t-content"><span class="tag tag-safe"
-                            style="background:#16a34a; border-color: #15803d;">夜間散策</span>
+                    <div class="t-time" style="color: #a5b4fc; border-right-color: #4338ca;">17:30<br>|<br>18:30</div>
+                    <div class="t-content"><span class="tag tag-safe" style="background:#16a34a; border-color: #15803d;">夜間散策</span>
                         <h4 style="color: white;">大阪城公園 (外觀點燈)</h4>
-                        <div class="spot-info-box"
-                            style="background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);">
+                        <div class="spot-info-box" style="background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);">
                             <div class="spot-info-title" style="color:white;">📸 大阪城夜拍</div>
                             <ul class="spot-list" style="color:white;">
                                 <li><strong>極樂橋：</strong> 拍攝點燈的天守閣倒映在護城河上。</li>
@@ -1768,14 +1953,12 @@
                         </ul>
                     </div>
                 </div>
-                <div class="t-row activity"
-                    style="background-color: #1e293b; color: white; border-left: 4px solid #f59e0b;">
+                <div class="t-row activity" style="background-color: #1e293b; color: white; border-left: 4px solid #f59e0b;">
                     <div class="t-time" style="color: #fbbf24;">20:30<br>|<br>21:30</div>
                     <div class="t-content"><span class="tag tag-leg">體力挑戰</span>
                         <h4 style="color: #fbbf24;">(可選) 梅田藍天大廈 空中庭園</h4>
                         <p>若還有體力才去。需從大阪站走 10-15 分鐘。</p>
-                        <div class="spot-info-box"
-                            style="background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);">
+                        <div class="spot-info-box" style="background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);">
                             <div class="spot-info-title" style="color:white;">📸 藍天大廈攝影</div>
                             <ul class="spot-list" style="color:white;">
                                 <li><strong>空中手扶梯：</strong> 必拍的科幻場景，彷彿通往宇宙。</li>
@@ -1799,12 +1982,13 @@
             <!-- D8 -->
             <div id="day8" class="day-content">
                 <div class="day-header" style="background:#059669;">
-                    <h3>Day 8 (2/28 六): 勝尾寺 & 臨空城</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿:
-                        關西機場飯店</span>
+                    <h3>Day 8 (2/28 六): 勝尾寺 & 臨空城</h3><span class="text-xs bg-white/20 px-2 py-1 rounded">宿: 關西機場飯店</span>
                 </div>
                 <div class="t-row safe" style="background-color: #f0fdf4; border-left: 4px solid #16a34a;">
                     <div class="t-time" style="color:#15803d;">天氣<br>完美</div>
-                    <div class="t-content"><span class="tag tag-safe">晴朗 (12°C)</span></div>
+                    <div class="t-content"><span class="tag tag-safe">晴朗 (12°C)</span>
+                        <p><strong>戰術調整：</strong> 捨棄市區擁擠戰場，下午直奔 Outlet 進行最終補給。</p>
+                    </div>
                 </div>
                 <div class="t-row move">
                     <div class="t-time">07:00<br>|<br>07:30</div>
@@ -1846,43 +2030,42 @@
                     <div class="t-time">12:30<br>|<br>13:30</div>
                     <div class="t-content">
                         <h4>午餐：新大阪站</h4>
+                        <p>新大阪站內商場 (Eki Marche / Arde) 選擇極多，吃飽再走。</p>
                     </div>
                 </div>
-                <div class="t-row activity">
-                    <div class="t-time">13:30<br>|<br>15:30</div>
-                    <div class="t-content">
-                        <h4>心齋橋 / 梅田 (自由時間)</h4>
-                        <p>最後衝刺補貨。</p>
-                    </div>
-                </div>
-                <div class="t-row move">
-                    <div class="t-time">16:00<br>|<br>17:00</div>
+                
+                <!-- 新增/修改區塊：提早領行李與搭乘 Haruka，直奔臨空城 -->
+                <div class="t-row move" style="background-color: #fdf2f8; border-left: 4px solid #be185d;">
+                    <div class="t-time" style="color:#be185d;">13:45<br>|<br>14:50</div>
                     <div class="t-content"><span class="tag tag-reserve">特急 Haruka</span>
                         <h4>新大阪 -> 臨空城 (Rinku Town)</h4>
                         <ul class="spot-list" style="margin-top:4px;">
-                            <li><strong>16:00 領行李：</strong> 預留 15 min 領回行李。</li>
-                            <li><strong>16:15 發車：</strong> 特急 Haruka 39號。</li>
-                            <li><strong>17:02 抵達：</strong> 臨空城站。</li>
+                            <li><strong>13:45 領行李：</strong> 悠閒領回 Coin Locker 的大行李。</li>
+                            <li><strong>14:00 發車：</strong> 搭乘特急 Haruka (班次密集，憑 JR Pass 可搭自由席或劃位)。</li>
+                            <li><strong>14:50 抵達：</strong> 臨空城站。建議先步行至飯店 Check-in 或寄放行李。</li>
                         </ul>
                     </div>
                 </div>
-                <div class="t-row activity">
-                    <div class="t-time">17:00<br>|<br>20:00</div>
-                    <div class="t-content">
-                        <h4>臨空城 Outlet</h4>
+                <div class="t-row activity" style="background-color: #fffbeb; border-left: 4px solid #f59e0b;">
+                    <div class="t-time" style="color:#b45309;">15:15<br>|<br>20:00</div>
+                    <div class="t-content"><span class="tag tag-shop">戰力釋放</span>
+                        <h4 style="color:#b45309;">臨空城 Outlet (Rinku Premium Outlets)</h4>
+                        <p>捨棄市區折返跑，換取近 5 小時的完整購物餘裕。逛累了隨時可找咖啡廳休息。</p>
                         <div class="spot-info-box">
-                            <div class="spot-info-title">📸 臨空城攝影</div>
+                            <div class="spot-info-title">📸 臨空城攝影與補給戰術</div>
                             <ul class="spot-list">
-                                <li><strong>摩天輪夕陽：</strong> 傍晚時分，拍攝摩天輪剪影與夕陽 (Magic Hour)。</li>
+                                <li><strong>摩天輪夕陽：</strong> 傍晚時分，拍攝摩天輪剪影與夕陽 (Magic Hour) 的絕美海景。</li>
+                                <li><strong>晚餐解決：</strong> 建議直接在 Outlet 內的景觀餐廳或美食街解決晚餐，避開飯店周邊餐廳較少的窘境。</li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                
                 <div class="t-row hotel">
                     <div class="t-time">20:30</div>
                     <div class="t-content">
                         <h4>入住：Star Gate Hotel Kansai Airport</h4>
-                        <p><strong>星際之門關西機場酒店：</strong> 位於臨空城站 (Rinku Town) 直結。全客房高樓層海景。</p>
+                        <p><strong>星際之門關西機場酒店：</strong> 位於臨空城站 (Rinku Town) 直結。全客房高樓層海景，結束完美的一天。</p>
                     </div>
                 </div>
             </div>
@@ -1943,13 +2126,22 @@
                     <p class="text-sm text-gray-600 mb-4"><strong class="text-red-600">⚠️ 請務必使用 Yahoo! JAPAN
                             (日文版)，勿用手機內建 Yahoo/AccuWeather。</strong><br>國際版無法預測日本微氣候（如地形雨）。請直接點擊下方連結：</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="border p-3 rounded bg-blue-50 border-blue-200">
-                            <strong class="text-blue-800 block mb-1">Tenki.jp (穿搭/生活指數)</strong>
-                            <a href="https://tenki.jp/forecast/3/16/4410/13104/" target="_blank"
-                                class="ext-link-btn tenki">東京 (新宿)</a>
-                            <a href="https://tenki.jp/forecast/6/29/4610/26106/" target="_blank"
-                                class="ext-link-btn tenki">京都 (市區)</a>
+                        
+                        <!-- 修改區塊：全面修正 404 錯誤，並升級為 10 日間天氣預報直達車 -->
+                        <div class="border p-3 rounded bg-blue-50 border-blue-200 md:col-span-2">
+                            <strong class="text-blue-800 block mb-2">Tenki.jp 氣象觀測站 (直接看 10 日趨勢圖)</strong>
+                            <div>
+                                <a href="https://tenki.jp/forecast/3/16/4410/10days.html" target="_blank" class="ext-link-btn tenki">🗼 東京 (市區)</a>
+                                <a href="https://tenki.jp/forecast/4/21/4920/10days.html" target="_blank" class="ext-link-btn tenki">🗻 河口湖 (山梨)</a>
+                                <a href="https://tenki.jp/forecast/6/29/4610/10days.html" target="_blank" class="ext-link-btn tenki">⛩️ 京都 (市區)</a>
+                                <a href="https://tenki.jp/forecast/6/29/4620/10days.html" target="_blank" class="ext-link-btn tenki">🎣 伊根 (京都北)</a>
+                                <a href="https://tenki.jp/forecast/7/34/6610/10days.html" target="_blank" class="ext-link-btn tenki">🍑 倉敷 (岡山)</a>
+                                <a href="https://tenki.jp/forecast/6/31/5010/10days.html" target="_blank" class="ext-link-btn tenki">🦌 奈良 (公園)</a>
+                                <a href="https://tenki.jp/forecast/6/30/6200/10days.html" target="_blank" class="ext-link-btn tenki">🐙 大阪 (市區)</a>
+                                <a href="https://tenki.jp/forecast/6/30/6200/27220/10days.html" target="_blank" class="ext-link-btn tenki">🍂 勝尾寺 (箕面)</a>
+                            </div>
                         </div>
+                        
                         <div class="border p-3 rounded bg-yellow-50 border-yellow-200">
                             <strong class="text-yellow-800 block mb-1">Yahoo! (JP) 雨雲雷達 (躲雨神器)</strong>
                             <a href="https://weather.yahoo.co.jp/weather/zoomradar/" target="_blank"
@@ -2059,24 +2251,19 @@
                 </div>
                 <div class="p-4 bg-red-50 mb-4 border-l-4 border-red-500">
                     <h4 class="text-red-700 mb-2 font-bold">🔥 最終查核清單 (Final Check)</h4>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'check_esim')"><input type="checkbox"
-                            id="check_esim">
+                    <label class="checklist-item checked" onclick="toggleCheck(this, 'check_esim')"><input type="checkbox" id="check_esim" checked>
                         <div class="item-content w-full ml-2"><strong>網卡/eSIM</strong></div>
                     </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'check_insurance')"><input type="checkbox"
-                            id="check_insurance">
+                    <label class="checklist-item checked" onclick="toggleCheck(this, 'check_insurance')"><input type="checkbox" id="check_insurance" checked>
                         <div class="item-content w-full ml-2"><strong>旅遊保險</strong></div>
                     </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'check_vjw')"><input type="checkbox"
-                            id="check_vjw">
+                    <label class="checklist-item checked" onclick="toggleCheck(this, 'check_vjw')"><input type="checkbox" id="check_vjw" checked>
                         <div class="item-content w-full ml-2"><strong>Visit Japan Web</strong></div>
                     </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'check_atm')"><input type="checkbox"
-                            id="check_atm">
+                    <label class="checklist-item checked" onclick="toggleCheck(this, 'check_atm')"><input type="checkbox" id="check_atm" checked>
                         <div class="item-content w-full ml-2"><strong>提款卡密碼</strong></div>
                     </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'check_app')"><input type="checkbox"
-                            id="check_app">
+                    <label class="checklist-item checked" onclick="toggleCheck(this, 'check_app')"><input type="checkbox" id="check_app" checked>
                         <div class="item-content w-full ml-2"><strong>App 下載</strong></div>
                     </label>
                 </div>
@@ -2090,60 +2277,50 @@
 
                     <!-- D1/D3/D4: East Japan -->
                     <h5 class="font-bold text-gray-700 mt-2 mb-1">東京廣域 (已預約 -> 領票)</h5>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'res_fuji_out')"><input type="checkbox"
-                            id="res_fuji_out">
+                    <label class="checklist-item checked" onclick="toggleCheck(this, 'res_fuji_out')"><input type="checkbox" id="res_fuji_out" checked>
                         <div class="item-content w-full ml-2">
                             <strong>D3 富士回遊 3號</strong> <span class="text-xs text-gray-500">新宿 07:30 -> 河口湖</span>
                         </div>
                     </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'res_fuji_in')"><input type="checkbox"
-                            id="res_fuji_in">
+                    <label class="checklist-item checked" onclick="toggleCheck(this, 'res_fuji_in')"><input type="checkbox" id="res_fuji_in" checked>
                         <div class="item-content w-full ml-2">
                             <strong>D4 富士回遊 36號</strong> <span class="text-xs text-gray-500">富士山 15:08 -> 新宿</span>
                         </div>
                     </label>
 
                     <!-- D4: Shinkansen -->
-                    <h5 class="font-bold text-gray-700 mt-4 mb-1">移動日 (需自費/劃位)</h5>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'res_tokyo_kyoto')"><input type="checkbox"
-                            id="res_tokyo_kyoto">
+                    <h5 class="font-bold text-gray-700 mt-4 mb-1">移動日 (獨立購票)</h5>
+                    <label class="checklist-item checked" onclick="toggleCheck(this, 'res_tokyo_kyoto')"><input type="checkbox" id="res_tokyo_kyoto" checked>
                         <div class="item-content w-full ml-2">
-                            <span class="tag tag-alert" style="padding:1px 4px; font-size:10px;">重要</span>
+                            <span class="tag tag-safe" style="padding:1px 4px; font-size:10px;">Klook</span>
                             <strong>D4 新幹線 Nozomi</strong> <span class="text-xs text-gray-500">品川 19:40 -> 京都</span>
-                            <div class="text-xs text-red-600 mt-1">⚠️ 記得預約「特大行李席」!</div>
+                            <div class="text-xs text-green-700 mt-1">✅ 已透過 Klook 完成預訂 (免現場劃位)</div>
                         </div>
                     </label>
 
                     <!-- D5/D6/D9: West Japan -->
                     <h5 class="font-bold text-gray-700 mt-4 mb-1">關西廣域 (Pass 免費劃位)</h5>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d5_akamatsu')"><input type="checkbox"
-                            id="res_d5_akamatsu">
+                    <label class="checklist-item checked" onclick="toggleCheck(this, 'res_d5_akamatsu')"><input type="checkbox" id="res_d5_akamatsu" checked>
                         <div class="item-content w-full ml-2">
-                            <strong>D5 丹後赤松號</strong> <span class="text-xs text-gray-500">西舞鶴 10:29 -> 天橋立
-                                (需預約整理券)</span>
+                            <strong>D5 丹後赤松號</strong> <span class="text-xs text-gray-500">西舞鶴 10:29 -> 天橋立 (已預約整理券)</span>
                         </div>
                     </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d5_hashidate')"><input type="checkbox"
-                            id="res_d5_hashidate">
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d5_hashidate')"><input type="checkbox" id="res_d5_hashidate">
                         <div class="item-content w-full ml-2">
-                            <strong>D5 特急 Hashidate</strong> <span class="text-xs text-gray-500">天橋立 -> 京都
-                                (回程)</span>
+                            <strong>D5 特急 Hashidate</strong> <span class="text-xs text-gray-500">天橋立 -> 京都 (回程)</span>
                         </div>
                     </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d6_himeji')"><input type="checkbox"
-                            id="res_d6_himeji">
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d6_himeji')"><input type="checkbox" id="res_d6_himeji">
                         <div class="item-content w-full ml-2">
                             <strong>D6 新幹線 (去程)</strong> <span class="text-xs text-gray-500">新大阪 08:00 -> 姬路</span>
                         </div>
                     </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d6_okayama')"><input type="checkbox"
-                            id="res_d6_okayama">
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d6_okayama')"><input type="checkbox" id="res_d6_okayama">
                         <div class="item-content w-full ml-2">
                             <strong>D6 新幹線 (中繼)</strong> <span class="text-xs text-gray-500">姬路 11:30 -> 岡山</span>
                         </div>
                     </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d6_return')"><input type="checkbox"
-                            id="res_d6_return">
+                    <label class="checklist-item" onclick="toggleCheck(this, 'res_d6_return')"><input type="checkbox" id="res_d6_return">
                         <div class="item-content w-full ml-2">
                             <strong>D6 新幹線 (回程)</strong> <span class="text-xs text-gray-500">岡山 20:10 -> 新大阪</span>
                         </div>
@@ -2151,16 +2328,13 @@
 
 
                     <h4 class="text-green-700 mb-3 mt-6">🎟️ 門票/體驗 (已預約確認)</h4>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'done_shibuya')"><input type="checkbox"
-                            id="done_shibuya" checked>
+                    <label class="checklist-item checked" onclick="toggleCheck(this, 'done_shibuya')"><input type="checkbox" id="done_shibuya" checked>
                         <div class="item-content w-full ml-2"><strong>D1 Shibuya Sky</strong> (11:40)</div>
                     </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'done_teamlab')"><input type="checkbox"
-                            id="done_teamlab" checked>
+                    <label class="checklist-item checked" onclick="toggleCheck(this, 'done_teamlab')"><input type="checkbox" id="done_teamlab" checked>
                         <div class="item-content w-full ml-2"><strong>D1 TeamLab Borderless</strong> (16:00)</div>
                     </label>
-                    <label class="checklist-item" onclick="toggleCheck(this, 'done_roppongi')"><input type="checkbox"
-                            id="done_roppongi" checked>
+                    <label class="checklist-item checked" onclick="toggleCheck(this, 'done_roppongi')"><input type="checkbox" id="done_roppongi" checked>
                         <div class="item-content w-full ml-2"><strong>D1 六本木觀景台</strong> (19:30)</div>
                     </label>
                 </div>
@@ -2197,8 +2371,7 @@
                                 <p class="text-sm text-gray-700 mt-1">
                                     <strong>等級：LV. 90</strong><br>
                                     停靠站少、座位舒適、速度快。<br>
-                                    <strong>費用結構：</strong> <span class="bg-yellow-200 px-1">乘車券 (基本費)</span> + <span
-                                        class="bg-pink-200 px-1">特急券 (快費)</span>。<br>
+                                    <strong>費用結構：</strong> <span class="bg-yellow-200 px-1">乘車券 (基本費)</span> + <span class="bg-pink-200 px-1">特急券 (快費)</span>。<br>
                                     <em>車種範例：Haruka (關空特急)、Thunderbird (雷鳥號)、成田 Express。</em><br>
                                     <span class="text-green-600 font-bold">💡 JR Pass 通常可以免費劃位搭乘！</span>
                                 </p>
@@ -2308,70 +2481,55 @@
                     <!-- Left Column: Carry On -->
                     <div>
                         <div class="mb-4 bg-yellow-50 p-3 rounded shadow-sm border border-yellow-300">
-                            <h4
-                                class="text-yellow-800 border-b border-yellow-200 pb-1 mb-2 font-bold flex items-center">
+                            <h4 class="text-yellow-800 border-b border-yellow-200 pb-1 mb-2 font-bold flex items-center">
                                 <span class="text-xl mr-2">🎒</span> 隨身背包 (Carry-On)
                             </h4>
-                            <p class="text-xs text-yellow-700 mb-2"><strong>⚠️ 關鍵規則：</strong>
-                                鋰電池/行動電源「嚴禁託運」。護照、現金、藥品請隨身攜帶。</p>
+                            <p class="text-xs text-yellow-700 mb-2"><strong>⚠️ 關鍵規則：</strong> 鋰電池/行動電源「嚴禁託運」。護照、現金、藥品請隨身攜帶。</p>
                             <div class="mb-3">
                                 <h5 class="text-sm font-bold text-gray-700 mb-1">文件與貴重品</h5>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_passport">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_passport">
                                     <div class="item-content w-full ml-2"><strong>護照</strong> (效期>6個月)</div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_vjw">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_vjw">
                                     <div class="item-content w-full ml-2"><strong>VJW QR Code 截圖</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_cash">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_cash">
                                     <div class="item-content w-full ml-2"><strong>日幣現金 / 信用卡</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_ic">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_ic">
                                     <div class="item-content w-full ml-2"><strong>Suica / ICOCA</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_pen">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_pen">
                                     <div class="item-content w-full ml-2"><strong>原子筆</strong> (填表用)</div>
                                 </label>
                             </div>
                             <div class="mb-3">
                                 <h5 class="text-sm font-bold text-gray-700 mb-1">電子與通訊 (安檢重點)</h5>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_phone">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_phone">
                                     <div class="item-content w-full ml-2"><strong>手機</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_powerbank">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_powerbank">
                                     <div class="item-content w-full ml-2 font-bold text-red-600">行動電源 (必隨身)</div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_sim_tool">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_sim_tool">
                                     <div class="item-content w-full ml-2"><strong>SIM卡針 / 網卡</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_wifi">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_wifi">
                                     <div class="item-content w-full ml-2"><strong>Pocket Wifi</strong> (若有)</div>
                                 </label>
                             </div>
                             <div class="mb-3">
                                 <h5 class="text-sm font-bold text-gray-700 mb-1">機上與落地急用</h5>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_med_chronic">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_med_chronic">
                                     <div class="item-content w-full ml-2"><strong>個人常備藥</strong> (隨身份)</div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_glasses">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_glasses">
                                     <div class="item-content w-full ml-2"><strong>眼鏡 / 墨鏡</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_tissue">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_tissue">
                                     <div class="item-content w-full ml-2"><strong>衛生紙 / 濕紙巾</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_scarf">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_scarf">
                                     <div class="item-content w-full ml-2"><strong>圍巾</strong> (機上/落地保暖)</div>
                                 </label>
                             </div>
@@ -2386,83 +2544,65 @@
                             <p class="text-xs text-blue-700 mb-2"><strong>⚠️ 關鍵規則：</strong> 液體>100ml、刀剪工具必須託運。</p>
                             <div class="mb-3">
                                 <h5 class="text-sm font-bold text-gray-700 mb-1">液體 / 盥洗 / 工具</h5>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_face_wash">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_face_wash">
                                     <div class="item-content w-full ml-2"><strong>洗面乳 / 卸妝 / 乳液</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_sunscreen">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_sunscreen">
                                     <div class="item-content w-full ml-2"><strong>防曬乳 / 液體化妝品</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_shaver">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_shaver">
                                     <div class="item-content w-full ml-2"><strong>指甲剪 / 刮鬍刀</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_tooth">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_tooth">
                                     <div class="item-content w-full ml-2"><strong>牙刷牙膏</strong></div>
                                 </label>
                             </div>
                             <div class="mb-3">
                                 <h5 class="text-sm font-bold text-gray-700 mb-1">衣物 (建議使用壓縮袋)</h5>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_heat_extra">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_heat_extra">
                                     <div class="item-content w-full ml-2"><strong>極暖發熱衣 x2</strong> (伊根用)</div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_heat_reg">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_heat_reg">
                                     <div class="item-content w-full ml-2"><strong>一般發熱衣 x2</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_pants_warm">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_pants_warm">
                                     <div class="item-content w-full ml-2"><strong>防風保暖褲</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_pants_reg">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_pants_reg">
                                     <div class="item-content w-full ml-2"><strong>舒適長褲</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_mid_tops">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_mid_tops">
                                     <div class="item-content w-full ml-2"><strong>上衣 (毛衣/大學T) x3</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_pajama">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_pajama">
                                     <div class="item-content w-full ml-2"><strong>睡衣</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_socks">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_socks">
                                     <div class="item-content w-full ml-2"><strong>厚襪子 x5</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_underwear_set">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_underwear_set">
                                     <div class="item-content w-full ml-2"><strong>內褲 x5</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_beanie_cap">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_beanie_cap">
                                     <div class="item-content w-full ml-2"><strong>毛帽 / 手套</strong> (備用)</div>
                                 </label>
                             </div>
                             <!-- Misc -->
                             <div class="mb-3">
                                 <h5 class="text-sm font-bold text-gray-700 mb-1">雜物 & 藥品庫</h5>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_cables">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_cables">
                                     <div class="item-content w-full ml-2"><strong>充電頭 / 備用線</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_umbrella_fold">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_umbrella_fold">
                                     <div class="item-content w-full ml-2"><strong>折疊傘</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_laundry_bag">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_laundry_bag">
                                     <div class="item-content w-full ml-2"><strong>洗衣袋 / 夾鏈袋</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_shoes_spare">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_shoes_spare">
                                     <div class="item-content w-full ml-2"><strong>備用鞋 / 防水噴霧</strong></div>
                                 </label>
-                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox"
-                                        id="pack_med_pain">
+                                <label class="checklist-item" onclick="toggleCheck(this)"><input type="checkbox" id="pack_med_pain">
                                     <div class="item-content w-full ml-2"><strong>藥包 (感冒/止痛/腸胃)</strong></div>
                                 </label>
                             </div>
@@ -2571,33 +2711,33 @@
                             </tr>
                             <tr class="bg-white border-b">
                                 <td class="px-2 py-3 font-bold">2/24 (一)</td>
-                                <td class="px-2 py-3 text-red-600 font-bold">19:40</td>
+                                <td class="px-2 py-3 text-green-700 font-bold">19:40</td>
                                 <td class="px-2 py-3"><strong>新幹線 Nozomi 459</strong></td>
-                                <td class="px-2 py-3 hidden md:table-cell text-red-600">品川 -> 京都 (特大行李席)</td>
-                                <td class="px-2 py-3"><span class="tag tag-alert">需劃位</span></td>
+                                <td class="px-2 py-3 hidden md:table-cell text-green-700">品川 -> 京都 (特大行李席)</td>
+                                <td class="px-2 py-3"><span class="tag tag-safe">已購票 (Klook)</span></td>
                             </tr>
 
                             <!-- D5 -->
                             <tr class="bg-gray-50 border-b">
                                 <td class="px-2 py-3 font-bold">2/25 (二)</td>
                                 <td class="px-2 py-3">07:32</td>
-                                <td class="px-2 py-3"><strong>特急 Maizuru 1號</strong></td>
-                                <td class="px-2 py-3 hidden md:table-cell">京都 -> 西舞鶴 (指定/自由)</td>
-                                <td class="px-2 py-3"><span class="tag tag-alert">需劃位</span></td>
+                                <td class="px-2 py-3"><strong class="text-red-600">特急 Hashidate 1號</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell text-red-600">京都 -> 綾部 (全車指定席) <br><span class="text-xs text-gray-500">※需在綾部換乘普通車</span></td>
+                                <td class="px-2 py-3"><span class="tag tag-alert">必需劃位</span></td>
                             </tr>
                             <tr class="bg-gray-50 border-b">
                                 <td class="px-2 py-3 font-bold">2/25 (二)</td>
-                                <td class="px-2 py-3">10:29</td>
-                                <td class="px-2 py-3"><strong>丹後赤松號</strong></td>
+                                <td class="px-2 py-3 text-green-700 font-bold">10:13</td>
+                                <td class="px-2 py-3"><strong>丹後赤松號 1號車</strong></td>
                                 <td class="px-2 py-3 hidden md:table-cell">西舞鶴 -> 天橋立 (觀光列車)</td>
-                                <td class="px-2 py-3"><span class="tag tag-alert">需預約</span></td>
+                                <td class="px-2 py-3"><span class="tag tag-safe">已預約完成</span></td>
                             </tr>
                             <tr class="bg-gray-50 border-b">
                                 <td class="px-2 py-3 font-bold">2/25 (二)</td>
-                                <td class="px-2 py-3">14:55</td>
-                                <td class="px-2 py-3"><strong>特急 Hashidate 4號</strong></td>
-                                <td class="px-2 py-3 hidden md:table-cell">天橋立 -> 京都 (指定席)</td>
-                                <td class="px-2 py-3"><span class="tag tag-alert">需劃位</span></td>
+                                <td class="px-2 py-3">13:48<br><span class="text-xs font-normal">或 16:55</span></td>
+                                <td class="px-2 py-3"><strong class="text-red-600">特急 Hashidate (回程)</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell text-red-600">天橋立 -> 龜岡 / 京都 (全車指定)</td>
+                                <td class="px-2 py-3"><span class="tag tag-alert">必需劃位</span></td>
                             </tr>
 
                             <!-- D6 -->
@@ -2654,10 +2794,7 @@
             </div>
         </div>
 
-
-
     </div>
-
 
     <script>
         function switchMainTab(sectionId) {
@@ -2723,9 +2860,24 @@
                 }
             }
 
-            // Link D5 -> D6 logic REMOVED to avoid confusion. 
-            // Let user choose Day 6 plan independently.
+            // --- STRICT LINKING LOGIC FOR D5 & D6 ---
+            if (day === 'day5') {
+                // Hide all D6 plans and deactivate buttons
+                document.getElementById('day6-plan-A').classList.add('hidden-plan');
+                document.getElementById('day6-plan-B').classList.add('hidden-plan');
+                document.getElementById('btn-day6-A').classList.remove('active');
+                document.getElementById('btn-day6-B').classList.remove('active');
 
+                if (plan === 'A') {
+                    // D5-A (伊根遠征) -> 體力透支 -> D6-A (京都留守)
+                    document.getElementById('day6-plan-A').classList.remove('hidden-plan');
+                    document.getElementById('btn-day6-A').classList.add('active');
+                } else {
+                    // D5-B (嵐山留守) -> 體力保留 -> D6-B (岡山遠征/JR Pass)
+                    document.getElementById('day6-plan-B').classList.remove('hidden-plan');
+                    document.getElementById('btn-day6-B').classList.add('active');
+                }
+            }
         }
 
         // --- CHECKLIST LOGIC ---
