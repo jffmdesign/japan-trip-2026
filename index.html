@@ -668,6 +668,7 @@
             <button onclick="switchMainTab('logistics')" id="tab-logistics" class="main-tab-btn text-indigo-700">🚅
                 劃位</button>
             <button onclick="switchMainTab('booking')" id="tab-booking" class="main-tab-btn text-red-600">✅ 待辦</button>
+            <button onclick="switchMainTab('guide')" id="tab-guide" class="main-tab-btn text-green-700">🎓 指南</button>
             <button onclick="switchMainTab('packing')" id="tab-packing" class="main-tab-btn text-amber-600">🧳
                 行李</button>
         </nav>
@@ -2330,48 +2331,148 @@
         <div id="section-logistics" style="display:none;">
             <div class="day-content active" style="margin-top:0;">
                 <div class="day-header" style="background:#4338ca;">
-                    <h3>🚅 交通與劃位戰術手冊</h3>
+                    <h3>🚅 交通與門票：預約明細總表</h3>
                 </div>
-                <div class="p-4 border-b border-gray-100">
-                    <h4 class="text-green-700 flex items-center"><span class="text-xl mr-2">🌲</span> JR 東日本系統 (去河口湖)
-                    </h4>
-                    <p class="mb-2"><strong>適用列車：</strong> <span class="tag tag-reserve">富士回遊</span> (全車指定席)</p>
-                    <div class="step-box">
-                        <div class="step-title">步驟 1: 線上預約 (Status: 已完成)</div>
-                        <div class="step-content"><span class="text-green-700 font-bold">✅
-                                已完成線上劃位。</span><br>您已經透過購票平台確認了座位。</div>
-                    </div>
-                    <div class="step-box">
-                        <div class="step-title">步驟 2: 領取實體票 (Exchange Only)</div>
-                        <div class="step-content">
-                            <strong>地點：</strong> 成田機場、新宿站等 JR 東日本車站的「綠色售票機」。<br>
-                            <strong>動作：</strong> 掃描 QR Code 或輸入訂單編號，<strong>領取實體指定席車票</strong>。<br>
-                            <span class="text-red-600 font-bold">注意：無需再操作「劃位」步驟，直接領票即可。票面上會有車廂與座號。</span>
-                        </div>
-                    </div>
+                <!-- Table Container -->
+                <div class="overflow-x-auto p-2">
+                    <table class="w-full text-sm text-left text-gray-700 border-collapse">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-100 border-b border-gray-300">
+                            <tr>
+                                <th class="px-2 py-3 border-b">日期</th>
+                                <th class="px-2 py-3 border-b">時間</th>
+                                <th class="px-2 py-3 border-b">項目 (車次/活動)</th>
+                                <th class="px-2 py-3 border-b hidden md:table-cell">起訖點 / 備註</th>
+                                <th class="px-2 py-3 border-b">狀態</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- D1 -->
+                            <tr class="bg-white border-b">
+                                <td class="px-2 py-3 font-bold">2/21 (五)</td>
+                                <td class="px-2 py-3">07:30</td>
+                                <td class="px-2 py-3"><strong>Skyliner 10號</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">成田 -> 上野 (指定席)</td>
+                                <td class="px-2 py-3"><span class="tag tag-safe">已購票</span></td>
+                            </tr>
+                            <tr class="bg-white border-b">
+                                <td class="px-2 py-3 font-bold">2/21 (五)</td>
+                                <td class="px-2 py-3">11:40</td>
+                                <td class="px-2 py-3"><strong>Shibuya Sky</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">場次 11:40-12:00</td>
+                                <td class="px-2 py-3"><span class="tag tag-safe">已預約</span></td>
+                            </tr>
+                            <tr class="bg-white border-b">
+                                <td class="px-2 py-3 font-bold">2/21 (五)</td>
+                                <td class="px-2 py-3">16:00</td>
+                                <td class="px-2 py-3"><strong>TeamLab Borderless</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">麻布台之丘</td>
+                                <td class="px-2 py-3"><span class="tag tag-safe">已預約</span></td>
+                            </tr>
+                            <tr class="bg-white border-b">
+                                <td class="px-2 py-3 font-bold">2/21 (五)</td>
+                                <td class="px-2 py-3">19:30</td>
+                                <td class="px-2 py-3"><strong>六本木觀景台</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">Tokyo City View</td>
+                                <td class="px-2 py-3"><span class="tag tag-safe">已購票</span></td>
+                            </tr>
+
+                            <!-- D3 -->
+                            <tr class="bg-gray-50 border-b">
+                                <td class="px-2 py-3 font-bold">2/23 (日)</td>
+                                <td class="px-2 py-3">07:30</td>
+                                <td class="px-2 py-3"><strong>富士回遊 3號</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">新宿 -> 河口湖 (全車指定)</td>
+                                <td class="px-2 py-3"><span class="tag tag-safe">已預約</span></td>
+                            </tr>
+
+                            <!-- D4 -->
+                            <tr class="bg-white border-b">
+                                <td class="px-2 py-3 font-bold">2/24 (一)</td>
+                                <td class="px-2 py-3">15:08</td>
+                                <td class="px-2 py-3"><strong>富士回遊 36號</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">富士山 -> 新宿 (全車指定)</td>
+                                <td class="px-2 py-3"><span class="tag tag-safe">已預約</span></td>
+                            </tr>
+                            <tr class="bg-white border-b">
+                                <td class="px-2 py-3 font-bold">2/24 (一)</td>
+                                <td class="px-2 py-3 text-red-600 font-bold">19:40</td>
+                                <td class="px-2 py-3"><strong>新幹線 Nozomi 459</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell text-red-600">品川 -> 京都 (特大行李席)</td>
+                                <td class="px-2 py-3"><span class="tag tag-alert">需劃位</span></td>
+                            </tr>
+
+                            <!-- D5 -->
+                            <tr class="bg-gray-50 border-b">
+                                <td class="px-2 py-3 font-bold">2/25 (二)</td>
+                                <td class="px-2 py-3">07:32</td>
+                                <td class="px-2 py-3"><strong>特急 Maizuru 1號</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">京都 -> 西舞鶴 (指定/自由)</td>
+                                <td class="px-2 py-3"><span class="tag tag-alert">需劃位</span></td>
+                            </tr>
+                            <tr class="bg-gray-50 border-b">
+                                <td class="px-2 py-3 font-bold">2/25 (二)</td>
+                                <td class="px-2 py-3">10:29</td>
+                                <td class="px-2 py-3"><strong>丹後赤松號</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">西舞鶴 -> 天橋立 (觀光列車)</td>
+                                <td class="px-2 py-3"><span class="tag tag-alert">需預約</span></td>
+                            </tr>
+                            <tr class="bg-gray-50 border-b">
+                                <td class="px-2 py-3 font-bold">2/25 (二)</td>
+                                <td class="px-2 py-3">14:55</td>
+                                <td class="px-2 py-3"><strong>特急 Hashidate 4號</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">天橋立 -> 京都 (指定席)</td>
+                                <td class="px-2 py-3"><span class="tag tag-alert">需劃位</span></td>
+                            </tr>
+
+                            <!-- D6 -->
+                            <tr class="bg-white border-b">
+                                <td class="px-2 py-3 font-bold">2/26 (三)</td>
+                                <td class="px-2 py-3">08:00</td>
+                                <td class="px-2 py-3"><strong>新幹線 Sakura 547</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">新大阪 -> 姬路 (指定席)</td>
+                                <td class="px-2 py-3"><span class="tag tag-alert">需劃位</span></td>
+                            </tr>
+                            <tr class="bg-white border-b">
+                                <td class="px-2 py-3 font-bold">2/26 (三)</td>
+                                <td class="px-2 py-3">11:30</td>
+                                <td class="px-2 py-3"><strong>新幹線 (任一班)</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">姬路 -> 岡山 (15分一班)</td>
+                                <td class="px-2 py-3"><span class="tag tag-alert">需劃位</span></td>
+                            </tr>
+                            <tr class="bg-white border-b">
+                                <td class="px-2 py-3 font-bold">2/26 (三)</td>
+                                <td class="px-2 py-3 text-red-600 font-bold">20:10</td>
+                                <td class="px-2 py-3"><strong>新幹線 Sakura 570</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell text-red-600">岡山 -> 新大阪 (指定席)</td>
+                                <td class="px-2 py-3"><span class="tag tag-alert">需劃位</span></td>
+                            </tr>
+
+                            <!-- D9 -->
+                            <tr class="bg-gray-50 border-b">
+                                <td class="px-2 py-3 font-bold">3/01 (六)</td>
+                                <td class="px-2 py-3">10:00</td>
+                                <td class="px-2 py-3"><strong>特急 Haruka 15號</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">新大阪 -> 關西機場</td>
+                                <td class="px-2 py-3"><span class="tag tag-alert">需劃位</span></td>
+                            </tr>
+                            <tr class="bg-gray-50 border-b">
+                                <td class="px-2 py-3 font-bold">3/01 (六)</td>
+                                <td class="px-2 py-3">13:10</td>
+                                <td class="px-2 py-3"><strong>星宇 JX823</strong></td>
+                                <td class="px-2 py-3 hidden md:table-cell">關西 -> 台北</td>
+                                <td class="px-2 py-3"><span class="tag tag-safe">已購票</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="p-4 border-b border-gray-100">
-                    <h4 class="text-blue-700 flex items-center"><span class="text-xl mr-2">🚅</span> 東海道新幹線 (去京都)</h4>
-                    <p class="mb-2"><strong>適用列車：</strong> <span class="tag tag-reserve">Nozomi / Hikari</span> (Day 4)
-                    </p>
-                    <div class="step-box">
-                        <div class="step-title">✅ 狀態：已預約 19:40 班次</div>
-                        <div class="step-content">記得確認是否已劃位「特大行李席」。</div>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <h4 class="text-indigo-700 flex items-center"><span class="text-xl mr-2">⛩️</span> JR 西日本系統 (關西周遊券)
-                    </h4>
-                    <p class="mb-2"><strong>適用列車：</strong> <span class="tag tag-reserve">Kinosaki</span>, <span
-                            class="tag tag-reserve">Hashidate</span>, <span class="tag tag-reserve">Haruka</span></p>
-                    <div class="step-box">
-                        <div class="step-title">步驟 1: 領取周遊券 (Day 4 晚上)</div>
-                        <div class="step-content">在京都站綠色售票機，掃描 Klook 憑證 + 護照。</div>
-                    </div>
-                    <div class="step-box">
-                        <div class="step-title">步驟 2: 機器劃位 (免費無限次)</div>
-                        <div class="step-content">拿到周遊券磁卡後，<strong>直接將磁卡插入綠色售票機</strong>劃位。</div>
-                    </div>
+
+                <div class="p-4 mt-4 bg-yellow-50 border-l-4 border-yellow-500 text-sm text-yellow-800">
+                    <h4 class="font-bold mb-2">💡 劃位與領票指南</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>JR 東日本 (富士回遊)</strong>：已線上預約，請至綠色機台掃 QR Code 領取實體票。</li>
+                        <li><strong>JR 西日本 (關西廣域)</strong>：抵達關西後，憑 Pass 至綠色機台劃位 (免費且無限次)。</li>
+                        <li><strong>新幹線 (東京-京都)</strong>：此段不含在 Pass 內，需單獨購票並預約「特大行李席」。</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -2389,6 +2490,7 @@
             document.getElementById('section-logistics').style.display = 'none';
             document.getElementById('section-packing').style.display = 'none';
             document.getElementById('section-weather').style.display = 'none';
+            document.getElementById('section-guide').style.display = 'none';
 
             document.getElementById('section-' + sectionId).style.display = 'block';
 
