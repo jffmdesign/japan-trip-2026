@@ -2723,23 +2723,9 @@
                     }
                 }
 
-                // Link D5 -> D6
-                if (day === 'day5') {
-                    document.getElementById('day6-plan-A').classList.add('hidden-plan');
-                    document.getElementById('day6-plan-B').classList.add('hidden-plan');
-                    document.getElementById('btn-day6-A').classList.remove('active');
-                    document.getElementById('btn-day6-B').classList.remove('active');
+                // Link D5 -> D6 logic REMOVED to avoid confusion. 
+                // Let user choose Day 6 plan independently.
 
-                    if (plan === 'A') {
-                        // D5-A (Ine) -> D6-A (Classic Kyoto)
-                        document.getElementById('day6-plan-A').classList.remove('hidden-plan');
-                        document.getElementById('btn-day6-A').classList.add('active');
-                    } else {
-                        // D5-B (Flash Return/Arashiyama) -> D6-B (Okayama)
-                        document.getElementById('day6-plan-B').classList.remove('hidden-plan');
-                        document.getElementById('btn-day6-B').classList.add('active');
-                    }
-                }
             }
 
             // --- CHECKLIST LOGIC ---
